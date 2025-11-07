@@ -11,25 +11,21 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 /* Este selector apunta a tu header específico */
-header.bg-dark { /* Ya que tienes bg-dark en tu header, lo usamos para el selector */
-    /* 1. La URL de la imagen de fondo */
-    /* Asegúrate de que esta ruta sea correcta desde la raíz de tu dominio (public/) */
-    background-image: url('/assets/img/hotel.png'); /* Ruta para Laravel Blade si 'public' es la raíz del servidor */
 
-    /* 2. Propiedades para que la imagen cubra todo el espacio */
-    background-size: cover; /* Escala la imagen para que cubra todo el contenedor */
-    background-position: center center; /* Centra la imagen de fondo */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+header.bg-dark {
+    /* 1. Fondo (necesario) */
+    background-image: url('/assets/img/hotel.png');
 
-    /* 3. Ajustes visuales para la legibilidad del texto (opcional, pero muy recomendado) */
-    /* Para oscurecer la imagen de fondo y que el texto blanco sea más legible */
-    background-color: rgba(0, 0, 0, 0); /* Una capa oscura semitransparente (ajusta el 0.6 para más/menos oscuridad) */
-    background-blend-mode: darken; /* Mezcla el color de fondo con la imagen */
+    /* 2. Propiedades de ajuste (necesario) */
+    background-size: cover;       /* Asegura que cubra todo el header */
+    background-position: center center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita repetición */
 
-    /* 4. Asegúrate de que el padding sea suficiente para que la imagen se vea bien */
-    /* py-5 de Bootstrap ya da un buen padding, pero puedes ajustarlo si quieres más altura */
-    padding-top: 100px; /* Ejemplo, ajusta según necesites */
-    padding-bottom: 100px; /* Ejemplo, ajusta según necesites */
+    /* 3. ¡LIMPIEZA! NO uses background-blend-mode ni el color rgba oscuro */
+
+    /* 4. Padding (para darle altura a la sección) */
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 
 /* Opcional: Si quieres que el texto dentro del header sea más grande o tenga más contraste */
@@ -37,8 +33,10 @@ header.bg-dark h1,
 header.bg-dark p {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para el texto para mejor contraste */
 }
+
  .bg-imsu{
     background-color: #FDDF86;
+
  }
 :root {
   --bs-blue: #0d6efd;

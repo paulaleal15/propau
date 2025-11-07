@@ -3,14 +3,14 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-12 my-5">
-        <h2 class="fw-bold mb-4">Detalle de su Pedido</h2>
+        <h2 class="fw-bold mb-4">Detalle de su reserva</h2>
         <div class="row">
             <!-- Cart Items -->
             <div class="col-lg-8">
                 <div class="card mb-4">
                     <div class="card-header bg-light">
                         <div class="row">
-                            <div class="col-md-5"><strong>Producto</strong></div>
+                            <div class="col-md-5"><strong>Habitación</strong></div>
                             <div class="col-md-2 text-center"><strong>Precio</strong></div>
                             <div class="col-md-2 text-center"><strong>Cantidad</strong></div>
                             <div class="col-md-3 text-end"><strong>Subtotal</strong></div>
@@ -22,7 +22,7 @@
                         <div class="row align-items-center mb-3 cart-item">
                             <!--Nombre y código-->
                             <div class="col-md-5 d-flex align-items-center">
-                                <img src="{{ asset('uploads/productos/' . $item['imagen']) }}" 
+                                <img src="{{ asset('uploads/productos/' . $item['imagen']) }}"
                                 style="width: 80px; height: 80px; object-fit: cover;" alt="{{ $item['nombre'] }}">
                                 <div class="ms-3">
                                     <h6 class="mb-0">{{ $item['nombre'] }}</h6>
@@ -61,7 +61,7 @@
                         <hr>
                         @empty
                         <div class="text-center">
-                            <p>Tu carrito esta vacío</p>
+                            <p>No hay Reservas</p>
                         </div>
                         @endforelse
                     </div>
@@ -81,7 +81,7 @@
                         <div class="row">
                             <div class="col text-end">
                                 <a class="btn btn-outline-danger me-2" href="{{route('carrito.vaciar')}}">
-                                    <i class="bi bi-x-circle me-1"></i>Vaciar carrito
+                                    <i class="bi bi-x-circle me-1"></i>Eliminar Reservas
                                 </a>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0">Resumen del Pedido</h5>
+                        <h5 class="mb-0">Resumen de la Reserva</h5>
                     </div>
                     <div class="card-body">
                         @php
@@ -110,12 +110,12 @@
                          <form action="{{route('pedido.realizar')}}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-primary w-100" id="checkout">
-                                <i class="bi bi-credit-card me-1"></i>Realizar pedido
+                                <i class="bi bi-credit-card me-1"></i>Realizar Reserva
                             </button>
                         </form>
                         <!-- Continue Shopping -->
                         <a href="/" class="btn btn-outline-secondary w-100 mt-3">
-                            <i class="bi bi-arrow-left me-1"></i>Continuar comprando
+                            <i class="bi bi-arrow-left me-1"></i>Cancelar Pago
                         </a>
                     </div>
                 </div>
