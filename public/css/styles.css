@@ -18,14 +18,18 @@ header.bg-dark {
 
     /* 2. Propiedades de ajuste (necesario) */
     background-size: cover;       /* Asegura que cubra todo el header */
-    background-position: center center; /* Centra la imagen */
+    background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita repetición */
 
     /* 3. ¡LIMPIEZA! NO uses background-blend-mode ni el color rgba oscuro */
-
+    height: 100vh;                 /* 100% del alto visible */
+    width: 100%;      
     /* 4. Padding (para darle altura a la sección) */
     padding-top: 100px;
     padding-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Opcional: Si quieres que el texto dentro del header sea más grande o tenga más contraste */
@@ -34,9 +38,24 @@ header.bg-dark p {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para el texto para mejor contraste */
 }
 
+.bg-imperial{
+  text-align: center;
+  color: white;
+  text-align: center;
+}
+
  .bg-imsu{
     background-color: #FDDF86;
 
+ }
+
+ .bg-over{
+  background: rgba(0, 0, 0, 0.5); /* negro semitransparente */
+  padding: 40px 60px;
+  border-radius: 5px;
+  display: inline-block;
+  
+  
  }
 :root {
   --bs-blue: #0d6efd;
