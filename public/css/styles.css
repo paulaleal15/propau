@@ -12,6 +12,8 @@
  */
 /* Este selector apunta a tu header específico */
 
+
+
 header.bg-dark {
   background-image: url('/assets/img/hotel.png');
   background-size: cover;
@@ -51,20 +53,21 @@ header.bg-dark p {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
-.btn-reserva {
-  background-color: #00f8ae; /* color de fondo */
-  color: #fd1c1c; /* color del texto */
-  border: none;
+.bg-reserva {
+  background-color: #FDDF86; /* color de fondo */
+  color: #000000; /* color del texto */
   padding: 10px 20px;
-  border-radius: 10px;
-  font-weight: bold;
   transition: all 0.3s ease;
 }
-.btn-reserva:hover {
+
+.bg-reserva:hover {
   background-color: #e0c56f; /* Dorado más oscuro al pasar el mouse */
   color: #000;
+  border:none;
 }
+login.bg-log{
 
+}
 
 :root {
   --bs-blue: #0d6efd;
