@@ -43,11 +43,12 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{asset('css/adminlte.css')}}" />
+    <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
     <!--end::Required Plugin(AdminLTE)-->
   </head>
   <!--end::Head-->
   <!--begin::Body-->
-  <body class="login-page bg-body-secondary">
+  <body class="login-page login-bg">
     <div class="login-box">
       @yield('contenido')
     </div>

@@ -1,17 +1,17 @@
 @extends('autenticacion.app')
 @section('titulo', 'Sistema - Login')
 @section('contenido')
-  <div class="card card-outline card-primary">
+  <div class="card card-outline card-primary bg-form">
   <div class="card-header">
     <a
       href="/"
       class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover"
     >
-      <h1 class="mb-0 "><b>Imperial States</b></h1>
+      <span class="text-title"><h1 class="mb-0 "><b>Imperial States</b></h1></span>
     </a>
   </div>
   <div class="card-body login-card-body">
-    <p class="login-box-msg">Ingrese sus datos</p>
+    <p class="login-box-msg text-white">Ingrese sus datos</p>
     @if(session('error'))
       <div class="alert alert-danger">
         {{session('error')}}
