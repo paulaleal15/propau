@@ -31,6 +31,12 @@ header.bg-dark {
   padding: 0; /* Evita desplazamiento por padding de Bootstrap */
 }
 
+.text-title {
+  color: #FDDF86;
+}
+.bg-form {
+  background: rgba(0, 0, 0, 0.6);
+}
 /* Contenedor del texto */
 .bg-over {
   background: rgba(0, 0, 0, 0.6);
@@ -65,8 +71,18 @@ header.bg-dark p {
   color: #000;
   border:none;
 }
-login.bg-log{
-
+.login-bg {
+  background-image: url(/assets/img/hotel.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
 }
 
 :root {
