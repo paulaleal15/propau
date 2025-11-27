@@ -15,6 +15,7 @@ use App\Http\Controllers\PedidoController;
 
 Route::get('/', [WebController::class, 'index'])->name('web.index');
 Route::get('/producto/{id}', [WebController::class, 'show'])->name('web.show');
+Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');
 
 Route::get('/carrito', [CarritoController::class, 'mostrar'])->name('carrito.mostrar');
 Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');

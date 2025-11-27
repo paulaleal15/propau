@@ -8,8 +8,7 @@
                     <i class="bi bi-list"></i>
                 </a>
             </li>
-            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+            <li class="nav-item d-none d-md-block"><a href="{{route('dashboard')}}" class="nav-link">Home</a></li>
         </ul>
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
@@ -43,9 +42,9 @@
                     <!--begin::Menu Footer-->
                     <li class="user-footer">
                         <a href="{{route('perfil.edit')}}" class="btn btn-default btn-flat">Perfil</a>
-                        <a href="#" onclick="document.getElementById('logout-form').submit();" class="btn btn-default btn-flat float-end">Cerrar sesión</a>
+                        <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-default btn-flat float-end">Cerrar sesión</a>
                     </li>
-                    <form action="{{route('logout')}}" id="logout-form" method="post" class="d-none">
+                    <form action="{{route('logout')}}" id="logout-form" method="post" style="display: none;">
                         @csrf
                     </form>
                     <!--end::Menu Footer-->
