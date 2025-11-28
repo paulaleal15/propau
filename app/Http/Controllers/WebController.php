@@ -40,4 +40,9 @@ class WebController extends Controller
         // Pasar el producto a la vista
         return view('web.item', compact('producto'));
     }
+
+    public function habitaciones(){
+        $productos = Producto::all();
+        return view('web.habitaciones', compact('productos'));
+    }
 }

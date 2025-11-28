@@ -8,7 +8,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Conocenos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Habitaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('web.habitaciones') }}">Habitaciones</a></li>
 
                 <li class="nav-item dropdown">
                     @auth
@@ -31,7 +31,12 @@
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Cerrar sesion</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesión</a>
+                            <form action="{{ route('logout') }}" id="logout-form" method="post" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
                     </ul>
                     @else
                         <a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a>
