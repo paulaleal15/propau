@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\PedidoDetalle;
+use App\Models\Habitacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -51,20 +52,31 @@ class PedidoController extends Controller
             $pedido = Pedido::create([
                 'user_id' => auth()->id(), 'total' => $total, 'estado' => 'pendiente'
             ]);
-            // 3. Crear los detalles del pedido
-            foreach ($carrito as $productoId => $item) {
+            // 3. Crear los detalles del pedido y actualizar estado de la habitación
+            foreach ($carrito as $item) {
                 PedidoDetalle::create([
-                    'pedido_id' => $pedido->id, 'producto_id' => $productoId,
-                    'cantidad' => $item['cantidad'], 'precio' => $item['precio'],
+                    'pedido_id' => $pedido->id,
+                    'producto_id' => $item['producto_id'],
+                    'cantidad' => $item['cantidad'],
+                    'precio' => $item['precio'],
+                    'fecha_inicio' => $item['fecha_inicio'],
+                    'fecha_fin' => $item['fecha_fin'],
                 ]);
+
+                // Actualizar el estado de la habitación a 'Ocupada'
+                $habitacion = Habitacion::find($item['habitacion_id']);
+                if ($habitacion) {
+                    $habitacion->estado = 'Ocupada';
+                    $habitacion->save();
+                }
             }
             // 4. Vaciar el carrito de la sesión
             session()->forget('carrito');
             DB::commit();
-            return redirect()->route('carrito.mostrar')->with('mensaje', 'Pedido realizado correctamente.');
+            return redirect()->route('web.habitaciones')->with('success', 'Reserva realizada correctamente. El estado de la habitación ha sido actualizado.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Hubo un error al procesar el pedido.');
+            return redirect()->back()->with('error', 'Hubo un error al procesar la reserva: ' . $e->getMessage());
         }
     }
 
