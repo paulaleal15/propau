@@ -12,8 +12,10 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\HabitacionController;
 
 Route::get('/', [WebController::class, 'index'])->name('web.index');
+Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');
 Route::get('/producto/{id}', [WebController::class, 'show'])->name('web.show');
 
 Route::get('/carrito', [CarritoController::class, 'mostrar'])->name('carrito.mostrar');
@@ -44,6 +46,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
     Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
+
+    Route::post('/habitaciones/{habitacion}/status', [HabitacionController::class, 'updateStatus'])->name('habitaciones.updateStatus');
 });
 
 Route::middleware('guest')->group(function(){
