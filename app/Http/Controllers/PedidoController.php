@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\PedidoDetalle;
+use App\Models\Habitacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -53,10 +54,30 @@ class PedidoController extends Controller
             ]);
             // 3. Crear los detalles del pedido
             foreach ($carrito as $productoId => $item) {
-                PedidoDetalle::create([
-                    'pedido_id' => $pedido->id, 'producto_id' => $productoId,
-                    'cantidad' => $item['cantidad'], 'precio' => $item['precio'],
-                ]);
+                if (isset($item['habitacion_id'])) {
+                    $detalle = PedidoDetalle::create([
+                        'pedido_id' => $pedido->id,
+                        'producto_id' => $item['producto_id'],
+                        'habitacion_id' => $item['habitacion_id'],
+                        'cantidad' => $item['cantidad'],
+                        'precio' => $item['precio'],
+                        'fecha_inicio' => $item['fecha_inicio'],
+                        'fecha_fin' => $item['fecha_fin'],
+                    ]);
+
+                    $habitacion = Habitacion::find($item['habitacion_id']);
+                    if ($habitacion) {
+                        $habitacion->estado = 'ocupada';
+                        $habitacion->save();
+                    }
+                } else {
+                    PedidoDetalle::create([
+                        'pedido_id' => $pedido->id,
+                        'producto_id' => $productoId,
+                        'cantidad' => $item['cantidad'],
+                        'precio' => $item['precio'],
+                    ]);
+                }
             }
             // 4. Vaciar el carrito de la sesión
             session()->forget('carrito');
