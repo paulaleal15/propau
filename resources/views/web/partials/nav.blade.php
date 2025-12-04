@@ -13,7 +13,7 @@
                 <li class="nav-item dropdown">
                     @auth
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                        data-bs-toggle="dropdown" aria-expanded="false">{{ auth()->user()->name }}</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{{ route('admin.habitaciones') }}">Gestionar Habitaciones</a></li>
                         <li><a class="dropdown-item" href="{{ route('admin.calendario-reservas') }}">Calendario de reservas</a></li>

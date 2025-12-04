@@ -27,7 +27,7 @@
                             <div class="mt-auto">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="fw-bold text-success fs-5">${{ number_format($producto->precio, 0) }}/noche</span>
-                                    <a href="#" class="btn btn-primary">Reservar Ahora</a>
+                                    <a href="{{ route('login') }}" class="btn btn-primary">Reservar Ahora</a>
                                 </div>
                             </div>
                         </div>
