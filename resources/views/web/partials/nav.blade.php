@@ -8,30 +8,27 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Conocenos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Habitaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('web.habitaciones') }}">Habitaciones</a></li>
 
                 <li class="nav-item dropdown">
                     @auth
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">{{auth()->user()->name}}</a>
+                        data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Calendario de reservas</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.habitaciones') }}">Gestionar Habitaciones</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.calendario-reservas') }}">Calendario de reservas</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.gestion-reservas') }}">Gestion de reservas</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.inventario-tarifas') }}">Inventario y tarifas</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.reporte-analisis') }}">Reporte y analisis</a></li>
+                        <li><hr class="dropdown-divider" /></li>
                         <li>
-                            <hr class="dropdown-divider" />
+                            <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
+                                @csrf
+                            </form>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Cerrar sesión
+                            </a>
                         </li>
-                        <li><a class="dropdown-item" href="{{route('perfil.edit')}}">Gestion de reservas</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Inventario y tarifas</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Reporte y analisis</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Cerrar sesion</a></li>
                     </ul>
                     @else
                         <a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a>

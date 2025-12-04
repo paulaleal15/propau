@@ -4,29 +4,56 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Habitacion;
+use Carbon\Carbon;
 
 class CarritoController extends Controller
 {
+    public function create(Habitacion $habitacion)
+    {
+        return view('admin.crear-reserva', compact('habitacion'));
+    }
+
     public function agregar(Request $request){
-        $producto = Producto::findOrFail($request->producto_id);
-        $cantidad = $request->cantidad ?? 1;
+        $request->validate([
+            'producto_id' => 'required|exists:productos,id',
+            'habitacion_id' => 'required|exists:habitaciones,id',
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
+        ]);
+
+        $habitacion = Habitacion::with('producto')->findOrFail($request->habitacion_id);
+        $producto = $habitacion->producto;
+
+        $fechaInicio = Carbon::parse($request->fecha_inicio);
+        $fechaFin = Carbon::parse($request->fecha_fin);
+        $noches = $fechaFin->diffInDays($fechaInicio);
 
         $carrito = session()->get('carrito', []);
-        if (isset($carrito[$producto->id])) {
-            // Ya existe en el carrito, solo aumenta la cantidad
-            $carrito[$producto->id]['cantidad'] += $cantidad;
+
+        // Usamos el ID de la habitación como clave para evitar duplicados
+        $carritoKey = 'habitacion_' . $habitacion->id;
+
+        if (isset($carrito[$carritoKey])) {
+            // Si ya existe, se puede actualizar o mostrar un error. Por ahora, lo reemplazamos.
+            $carrito[$carritoKey]['fecha_inicio'] = $fechaInicio->toDateString();
+            $carrito[$carritoKey]['fecha_fin'] = $fechaFin->toDateString();
+            $carrito[$carritoKey]['cantidad'] = $noches;
         } else {
             // No existe, lo agregamos
-            $carrito[$producto->id] = [
-                'codigo' => $producto->codigo,
-                'nombre' => $producto->nombre,
+            $carrito[$carritoKey] = [
+                'producto_id' => $producto->id,
+                'habitacion_id' => $habitacion->id,
+                'nombre' => $producto->nombre . ' - Hab. ' . $habitacion->numero,
                 'precio' => $producto->precio,
-                'imagen' => $producto->imagen,
-                'cantidad' => $cantidad,
+                'cantidad' => $noches, // La cantidad es el número de noches
+                'fecha_inicio' => $fechaInicio->toDateString(),
+                'fecha_fin' => $fechaFin->toDateString(),
             ];
         }
+
         session()->put('carrito', $carrito);
-        return redirect()->back()->with('mensaje', 'Producto agregado al carrito');
+        return redirect()->route('carrito.mostrar')->with('mensaje', 'Habitación agregada a la reserva.');
     }
 
     public function mostrar(){
@@ -35,47 +62,28 @@ class CarritoController extends Controller
     }
 
     public function sumar(Request $request){
-        $productoId = $request->producto_id;
-
-        $carrito = session()->get('carrito', []);
-
-        if (isset($carrito[$productoId])) {
-            $carrito[$productoId]['cantidad'] += 1;
-            session()->put('carrito', $carrito);
-        }
-
-        return redirect()->back()->with('mensaje', 'Cantidad actualizada en el carrito');
+        // Esta función podría no tener sentido en un contexto de reserva por fechas.
+        // Se puede deshabilitar o adaptar si es necesario.
+        return redirect()->back()->with('mensaje', 'No se puede cambiar la cantidad directamente.');
     }
 
     public function restar(Request $request){
-        $productoId = $request->producto_id;
-
-        $carrito = session()->get('carrito', []);
-
-        if (isset($carrito[$productoId])) {
-            if ($carrito[$productoId]['cantidad'] > 1) {
-                // Resta 1 si la cantidad es mayor a 1
-                $carrito[$productoId]['cantidad'] -= 1;
-            } 
-            else{
-                // Si es 1, lo quitamos del carrito
-                unset($carrito[$productoId]);
-            }
-            session()->put('carrito', $carrito);
-        }
-
-        return redirect()->back()->with('mensaje', 'Cantidad actualizada en el carrito');
+        // Esta función podría no tener sentido en un contexto de reserva por fechas.
+        // Se puede deshabilitar o adaptar si es necesario.
+        return redirect()->back()->with('mensaje', 'No se puede cambiar la cantidad directamente.');
     }
+
     public function eliminar($id){
         $carrito = session()->get('carrito');
         if (isset($carrito[$id])) {
             unset($carrito[$id]);
             session()->put('carrito', $carrito);
         }
-        return redirect()->back()->with('success', 'Producto eliminado');
+        return redirect()->back()->with('success', 'Habitación eliminada de la reserva');
     }
+
     public function vaciar(){
         session()->forget('carrito');
-        return redirect()->back()->with('success', 'Carrito vaciado');
+        return redirect()->back()->with('success', 'Reserva vaciada');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Habitacion;
 
 class WebController extends Controller
 {
@@ -39,5 +40,11 @@ class WebController extends Controller
         $producto = Producto::findOrFail($id);        
         // Pasar el producto a la vista
         return view('web.item', compact('producto'));
+    }
+
+    public function habitaciones()
+    {
+        $productos = Producto::where('tipo', 'Habitación')->paginate(10);
+        return view('web.habitaciones', compact('productos'));
     }
 }
