@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\HabitacionController;
 
 Route::get('/', [WebController::class, 'index'])->name('web.index');
 Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');
@@ -30,6 +31,11 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductoController::class);
 
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+        Route::resource('habitaciones', HabitacionController::class)->middleware('can:habitacion-list');
+    });
+
+    Route::post('/carrito/habitacion/agregar', [CarritoController::class, 'agregarHabitacion'])->name('carrito.agregarHabitacion');
     Route::post('/pedido/realizar', [PedidoController::class, 'realizar'])->name('pedido.realizar');
     Route::get('/perfil/pedidos', [PedidoController::class, 'index'])->name('perfil.pedidos');
     Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar.estado');    
