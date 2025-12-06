@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Habitacion;
+use App\Models\PedidoDetalle;
 
 class CarritoController extends Controller
 {
@@ -27,6 +29,46 @@ class CarritoController extends Controller
         }
         session()->put('carrito', $carrito);
         return redirect()->back()->with('mensaje', 'Producto agregado al carrito');
+    }
+
+    public function agregarHabitacion(Request $request)
+    {
+        $habitacion = Habitacion::with('producto')->findOrFail($request->habitacion_id);
+
+        // Check for booking conflicts
+        $isBooked = PedidoDetalle::whereHas('pedido', function ($query) {
+            $query->where('estado', '!=', 'anulado');
+        })
+        ->where('habitacion_id', $habitacion->id)
+            ->where(function ($query) use ($request) {
+                $query->where('fecha_inicio', '<', $request->fecha_fin)
+                      ->where('fecha_fin', '>', $request->fecha_inicio);
+            })->exists();
+
+        if ($isBooked) {
+            return redirect()->back()->with('error', 'La habitación ya está reservada para las fechas seleccionadas.');
+        }
+
+        $carrito = session()->get('carrito', []);
+
+        if (isset($carrito[$habitacion->id])) {
+            return redirect()->back()->with('mensaje', 'La habitación ya está en el carrito.');
+        }
+
+        $carrito[$habitacion->id] = [
+            'habitacion_id' => $habitacion->id,
+            'producto_id' => $habitacion->producto->id,
+            'nombre' => $habitacion->producto->nombre,
+            'numero' => $habitacion->numero,
+            'precio' => $habitacion->producto->precio,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'cantidad' => 1,
+        ];
+
+        session()->put('carrito', $carrito);
+
+        return redirect()->route('carrito.mostrar')->with('mensaje', 'Habitación agregada al carrito.');
     }
 
     public function mostrar(){

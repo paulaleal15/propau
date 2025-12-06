@@ -82,6 +82,14 @@
                             </a>
                         </li>
                         @endcan
+                        @can('habitacion-list')
+                        <li class="nav-item">
+                            <a href="{{route('admin.habitaciones.index')}}" class="nav-link" id="itemHabitacion">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Habitaciones</p>
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
                 @endcanany
