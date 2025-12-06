@@ -45,4 +45,8 @@ class WebController extends Controller
         $productos = Producto::all();
         return view('web.habitaciones', compact('productos'));
     }
+
+    public function conocenos(){
+        return view('web.conocenos');
+    }
 }
