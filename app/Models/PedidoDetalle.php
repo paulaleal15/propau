@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PedidoDetalle extends Model
 {
-    protected $fillable = ['pedido_id', 'producto_id', 'cantidad', 'precio'];
+    protected $fillable = ['pedido_id', 'producto_id', 'cantidad', 'precio', 'habitacion_id', 'fecha_inicio', 'fecha_fin'];
 
     public function pedido()
     {
@@ -16,5 +16,10 @@ class PedidoDetalle extends Model
     public function producto()
     {
         return $this->belongsTo(Producto::class);
+    }
+
+    public function habitacion()
+    {
+        return $this->belongsTo(Habitacion::class);
     }
 }
