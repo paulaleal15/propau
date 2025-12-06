@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Habitacion;
 
 class WebController extends Controller
 {
@@ -42,7 +43,7 @@ class WebController extends Controller
     }
 
     public function habitaciones(){
-        $productos = Producto::all();
-        return view('web.habitaciones', compact('productos'));
+        $habitaciones = Habitacion::with('producto')->get();
+        return view('web.habitaciones', compact('habitaciones'));
     }
 }
