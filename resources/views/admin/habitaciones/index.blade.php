@@ -28,7 +28,7 @@
                         <th>Producto</th>
                         <th>Número</th>
                         <th>Piso</th>
-                        <th>Estado</th>
+                        <th>Disponibilidad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -39,14 +39,22 @@
                             <td>{{ $habitacion->producto->nombre }}</td>
                             <td>{{ $habitacion->numero }}</td>
                             <td>{{ $habitacion->piso }}</td>
-                            <td>{{ $habitacion->estado }}</td>
                             <td>
-                                <a href="{{ route('habitaciones.show', $habitacion->id) }}" class="btn btn-info">Ver</a>
-                                <a href="{{ route('habitaciones.edit', $habitacion->id) }}" class="btn btn-warning">Editar</a>
-                                @if($habitacion->estado == 'disponible')
-                                    <a href="{{ route('habitaciones.booking', $habitacion->id) }}" class="btn btn-success">Reservar</a>
+                                @if ($habitacion->estado == 'disponible')
+                                    <span class="badge bg-success">Disponible</span>
+                                @elseif ($habitacion->estado == 'ocupada')
+                                    <span class="badge bg-danger">Ocupada</span>
                                 @else
-                                    <a href="#" class="btn btn-success" disabled>Reservar</a>
+                                    <span class="badge bg-warning text-dark">Mantenimiento</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('habitaciones.show', $habitacion->id) }}" class="btn btn-sm btn-info">Ver</a>
+                                <a href="{{ route('habitaciones.edit', $habitacion->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                                @if($habitacion->estado == 'disponible')
+                                    <a href="{{ route('habitaciones.booking', $habitacion->id) }}" class="btn btn-sm btn-success">Reservar</a>
+                                @else
+                                    <a href="#" class="btn btn-sm btn-success disabled" aria-disabled="true">Reservar</a>
                                 @endif
                                 <form action="{{ route('habitaciones.destroy', $habitacion->id) }}" method="POST" style="display: inline-block;">
                                     @csrf

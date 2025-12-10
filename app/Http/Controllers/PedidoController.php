@@ -45,45 +45,26 @@ class PedidoController extends Controller
             // 1. Calcular el total
             $total = 0;
             foreach ($carrito as $item) {
-                if (isset($item['tipo']) && $item['tipo'] == 'habitacion') {
-                    $total += $item['precio_total'];
-                } else {
-                    $total += $item['precio'] * $item['cantidad'];
-                }
+                $total += $item['precio'] * $item['cantidad'];
             }
             // 2. Crear el pedido
             $pedido = Pedido::create([
                 'user_id' => auth()->id(), 'total' => $total, 'estado' => 'pendiente'
             ]);
             // 3. Crear los detalles del pedido
-            foreach ($carrito as $id => $item) {
-                if (isset($item['tipo']) && $item['tipo'] == 'habitacion') {
-                    PedidoDetalle::create([
-                        'pedido_id' => $pedido->id,
-                        'producto_id' => $item['producto_id'],
-                        'habitacion_id' => $item['habitacion_id'],
-                        'cantidad' => 1,
-                        'precio' => $item['precio_total'],
-                        'fecha_inicio' => $item['fecha_inicio'],
-                        'fecha_fin' => $item['fecha_fin'],
-                    ]);
-                } else {
-                    PedidoDetalle::create([
-                        'pedido_id' => $pedido->id,
-                        'producto_id' => $item['producto_id'],
-                        'cantidad' => $item['cantidad'],
-                        'precio' => $item['precio'],
-                    ]);
-                }
+            foreach ($carrito as $productoId => $item) {
+                PedidoDetalle::create([
+                    'pedido_id' => $pedido->id, 'producto_id' => $productoId,
+                    'cantidad' => $item['cantidad'], 'precio' => $item['precio'],
+                ]);
             }
             // 4. Vaciar el carrito de la sesión
             session()->forget('carrito');
             DB::commit();
-            return redirect()->route('perfil.pedidos')->with('success', 'Pedido realizado correctamente. Puede ver sus detalles en su perfil.');
+            return redirect()->route('carrito.mostrar')->with('mensaje', 'Pedido realizado correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Error al procesar el pedido: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Hubo un error al procesar el pedido: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Hubo un error al procesar el pedido.');
         }
     }
 

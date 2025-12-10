@@ -20,4 +20,12 @@ class Habitacion extends Model
     {
         return $this->belongsTo(Producto::class);
     }
+
+    /**
+     * Define la relación con las reservas (detalles de pedido).
+     */
+    public function reservas()
+    {
+        return $this->hasMany(PedidoDetalle::class);
+    }
 }

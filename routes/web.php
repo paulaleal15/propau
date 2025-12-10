@@ -13,10 +13,6 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\HabitacionController;
-use App\Http\Controllers\ReservaController;
-
-Route::get('/reserva/fechas/{id}', [ReservaController::class, 'seleccionarFechas'])->name('reservas.fechas');
-Route::post('/reserva/verificar', [ReservaController::class, 'verificarDisponibilidad'])->name('reservas.verificar');
 
 Route::get('/', [WebController::class, 'index'])->name('web.index');
 Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');

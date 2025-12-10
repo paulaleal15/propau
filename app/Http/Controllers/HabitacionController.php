@@ -7,6 +7,8 @@ use App\Models\Producto;
 use App\Models\Pedido;
 use App\Models\PedidoDetalle;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Carbon\Carbon;
 
 class HabitacionController extends Controller
 {
@@ -91,39 +93,57 @@ class HabitacionController extends Controller
 
     public function booking(Habitacion $habitacion)
     {
-        return view('admin.habitaciones.booking', compact('habitacion'));
+        $clientes = User::all(); // Opcional: filtrar por rol de cliente si existe
+        return view('admin.habitaciones.booking', compact('habitacion', 'clientes'));
     }
 
     public function storeBooking(Request $request, Habitacion $habitacion)
     {
         $request->validate([
+            'user_id' => 'required|exists:users,id',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after:fecha_inicio',
+        ], [
+            'user_id.required' => 'Debe seleccionar un cliente.',
+            'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio.'
         ]);
 
+        $fechaInicio = Carbon::parse($request->fecha_inicio);
+        $fechaFin = Carbon::parse($request->fecha_fin);
+
         $conflictingReservations = PedidoDetalle::where('habitacion_id', $habitacion->id)
-            ->where('fecha_inicio', '<', $request->fecha_fin)
-            ->where('fecha_fin', '>', $request->fecha_inicio)
+            ->where('fecha_inicio', '<', $fechaFin)
+            ->where('fecha_fin', '>', $fechaInicio)
             ->exists();
 
         if ($conflictingReservations) {
-            return redirect()->back()->withErrors(['error' => 'La habitación no está disponible en las fechas seleccionadas.']);
+            return redirect()->back()->withErrors(['error' => 'La habitación no está disponible en las fechas seleccionadas.'])->withInput();
         }
 
+        // Calcular el número de noches. Si es el mismo día, cuenta como 1 noche.
+        $noches = $fechaInicio->diffInDays($fechaFin);
+        if ($fechaInicio->startOfDay()->equalTo($fechaFin->startOfDay())) {
+            $noches = 1;
+        }
+        if ($noches == 0) $noches = 1; // Mínimo una noche
+
+        $precioTotal = $noches * $habitacion->producto->precio;
+
         $pedido = Pedido::create([
-            'user_id' => auth()->id(),
-            'total' => $habitacion->producto->precio,
+            'user_id' => $request->user_id,
+            'total' => $precioTotal,
             'estado' => 'pendiente',
         ]);
 
         $pedido->detalles()->create([
+            'producto_id' => $habitacion->producto_id,
             'habitacion_id' => $habitacion->id,
-            'fecha_inicio' => $request->fecha_inicio,
-            'fecha_fin' => $request->fecha_fin,
-            'precio' => $habitacion->producto->precio,
-            'cantidad' => 1,
+            'fecha_inicio' => $fechaInicio,
+            'fecha_fin' => $fechaFin,
+            'precio' => $precioTotal, // Guardar el precio total del detalle
+            'cantidad' => $noches, // Usar cantidad para almacenar el número de noches
         ]);
 
-        return redirect()->route('habitaciones.index')->with('success', 'Reserva creada con éxito.');
+        return redirect()->route('habitaciones.index')->with('success', 'Reserva creada con éxito para el cliente seleccionado.');
     }
 }

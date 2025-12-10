@@ -12,3 +12,12 @@ Port 5173 is in use, trying another one...
   LARAVEL v12.1.1  plugin v1.3.0
 
   ➜  APP_URL: undefined
+8:06:53 PM [vite] full reload routes/web.php
+8:07:24 PM [vite] full reload resources/views/web/habitaciones.blade.php
+8:07:41 PM [vite] full reload resources/views/web/pedido.blade.php
+8:08:54 PM [vite] full reload resources/views/admin/habitaciones/booking.blade.php
+8:10:39 PM [vite] full reload resources/views/admin/habitaciones/index.blade.php
+8:22:25 PM [vite] full reload resources/views/admin/habitaciones/booking.blade.php
+8:22:37 PM [vite] full reload resources/views/admin/habitaciones/booking.blade.php
+8:25:44 PM [vite] full reload resources/views/admin/habitaciones/index.blade.php
+8:28:19 PM [vite] full reload resources/views/admin/habitaciones/index.blade.php
