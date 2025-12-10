@@ -33,13 +33,9 @@
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
                             @if($habitacion->estado == 'disponible')
-                                <form action="{{ route('carrito.agregar') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $habitacion->producto->id }}">
-                                    <button type="submit" class="btn btn-outline-dark mt-auto">Añadir al carrito</button>
-                                </form>
+                                <a href="{{ route('reservas.fechas', ['id' => $habitacion->id]) }}" class="btn btn-outline-dark mt-auto">Reservar</a>
                             @else
-                                <button type="submit" class="btn btn-outline-dark mt-auto" disabled>No disponible</button>
+                                <button class="btn btn-outline-dark mt-auto" disabled>No disponible</button>
                             @endif
                         </div>
                     </div>
