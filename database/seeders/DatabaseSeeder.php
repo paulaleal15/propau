@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         ]);
         */
         $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(ProductoSeeder::class);
+        $this->call(HabitacionSeeder::class);
     }
 }
