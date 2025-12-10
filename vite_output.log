@@ -2,15 +2,3 @@
 > dev
 > vite
 
-
-  VITE v6.4.1  ready in 522 ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-
-  LARAVEL v12.1.1  plugin v1.3.0
-
-  ➜  APP_URL: undefined
-12:17:35 AM [vite] full reload resources/views/web/partials/nav.blade.php
-12:17:35 AM [vite] full reload routes/web.php
-12:17:35 AM [vite] full reload resources/views/web/habitaciones.blade.php

@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\HabitacionController;
 
 Route::get('/', [WebController::class, 'index'])->name('web.index');
 Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');
@@ -29,6 +30,9 @@ Route::middleware(['auth'])->group(function(){
     Route::patch('usuarios/{usuario}/toggle', [UserController::class, 'toggleStatus'])->name('usuarios.toggle');
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductoController::class);
+    Route::resource('habitaciones', HabitacionController::class);
+    Route::get('habitaciones/{habitacion}/booking', [HabitacionController::class, 'booking'])->name('habitaciones.booking');
+    Route::post('habitaciones/{habitacion}/booking', [HabitacionController::class, 'storeBooking'])->name('habitaciones.storeBooking');
 
     Route::post('/pedido/realizar', [PedidoController::class, 'realizar'])->name('pedido.realizar');
     Route::get('/perfil/pedidos', [PedidoController::class, 'index'])->name('perfil.pedidos');
