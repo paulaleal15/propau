@@ -1,0 +1,56 @@
+/*
+*  Admin Panel Skin - Inspired by the Public Website Theme
+*/
+
+/* --- Sidebar Principal --- */
+.app-sidebar {
+    background-color: #f8f9fa !important; /* Un fondo claro, similar al cuerpo de la web pública */
+    border-right: 1px solid #dee2e6;
+}
+
+/* --- Marca/Logo --- */
+.app-sidebar .brand-link {
+    background-color: #FDDF86; /* Color dorado de acento */
+    border-bottom: 1px solid #e0c56f;
+}
+
+.app-sidebar .brand-text {
+    color: #212529 !important; /* Texto oscuro para contrastar con el fondo dorado */
+    font-weight: 600 !important;
+}
+
+/* --- Enlaces de Navegación --- */
+.app-sidebar .nav-link {
+    color: #212529 !important; /* Texto oscuro para los enlaces */
+}
+
+.app-sidebar .nav-link:hover {
+    background-color: #e9ecef !important; /* Un gris muy claro para el hover */
+    color: #000 !important;
+}
+
+/* Enlace activo */
+.app-sidebar .nav-item.menu-open > .nav-link,
+.app-sidebar .nav-link.active {
+    background-color: #FDDF86 !important; /* Dorado para el enlace activo */
+    color: #212529 !important; /* Texto oscuro para el enlace activo */
+}
+
+/* Iconos de los enlaces */
+.app-sidebar .nav-icon {
+    color: #495057 !important;
+}
+
+.app-sidebar .nav-link.active .nav-icon {
+    color: #212529 !important;
+}
+
+/* --- Cabecera Superior --- */
+.app-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.app-header .nav-link {
+     color: #212529 !important;
+}

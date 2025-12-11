@@ -43,6 +43,7 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{asset('css/adminlte.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/admin-skin.css')}}" />
     <!--end::Required Plugin(AdminLTE)-->
     @stack('estilos')
   </head>
