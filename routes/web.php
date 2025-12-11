@@ -9,12 +9,12 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PerfilController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
 
 Route::get('/', [WebController::class, 'index'])->name('web.index');
-Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');
 Route::get('/producto/{id}', [WebController::class, 'show'])->name('web.show');
 
 Route::get('/carrito', [CarritoController::class, 'mostrar'])->name('carrito.mostrar');
@@ -25,10 +25,15 @@ Route::get('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->na
 Route::get('/carrito/vaciar', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
 
 Route::middleware(['auth'])->group(function(){
+    Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');
     Route::resource('usuarios', UserController::class);
     Route::patch('usuarios/{usuario}/toggle', [UserController::class, 'toggleStatus'])->name('usuarios.toggle');
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductoController::class);
+    Route::resource('habitaciones', HabitacionController::class);
+    Route::get('/habitaciones/{habitacion}/booking', [HabitacionController::class, 'booking'])->name('habitaciones.booking');
+    Route::post('/habitaciones/{habitacion}/booking', [HabitacionController::class, 'storeBooking'])->name('habitaciones.storeBooking');
+
 
     Route::post('/pedido/realizar', [PedidoController::class, 'realizar'])->name('pedido.realizar');
     Route::get('/perfil/pedidos', [PedidoController::class, 'index'])->name('perfil.pedidos');
