@@ -9,6 +9,8 @@ class Habitacion extends Model
 {
     use HasFactory;
 
+    protected $table = 'habitaciones';
+
     protected $fillable = [
         'producto_id',
         'numero',
