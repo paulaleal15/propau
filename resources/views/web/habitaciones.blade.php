@@ -30,11 +30,7 @@
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
-                            <form action="{{ route('carrito.agregar') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $producto->id }}">
-                                <button type="submit" class="btn btn-outline-dark mt-auto">Añadir al carrito</button>
-                            </form>
+                            <a href="{{ route('web.show', $producto->id) }}" class="btn btn-outline-dark mt-auto">Ver detalles</a>
                         </div>
                     </div>
                 </div>
