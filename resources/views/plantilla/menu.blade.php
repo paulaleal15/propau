@@ -78,10 +78,22 @@
                         <li class="nav-item">
                             <a href="{{route('productos.index')}}" class="nav-link" id="itemProducto">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Productos</p>
+                                <p>Tipos de Habitación</p>
                             </a>
                         </li>
                         @endcan
+                        <li class="nav-item">
+                            <a href="{{route('habitaciones.index')}}" class="nav-link" id="itemHabitacion">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Habitaciones</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('habitaciones.gallery')}}" class="nav-link" id="itemHabitacionGallery">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Reservar Habitación</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @endcanany

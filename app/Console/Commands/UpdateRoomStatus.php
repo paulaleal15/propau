@@ -30,7 +30,7 @@ class UpdateRoomStatus extends Command
     {
         $today = Carbon::today();
 
-        // Find rooms with expired bookings
+        // Find rooms with expired bookings and set them to 'disponible'
         $expiredBookings = PedidoDetalle::where('fecha_fin', '<', $today)
             ->whereHas('habitacion', function ($query) {
                 $query->where('estado', 'ocupada');
@@ -39,6 +39,18 @@ class UpdateRoomStatus extends Command
 
         foreach ($expiredBookings as $booking) {
             $booking->habitacion->update(['estado' => 'disponible']);
+        }
+
+        // Find rooms with active bookings and set them to 'ocupada'
+        $activeBookings = PedidoDetalle::where('fecha_inicio', '<=', $today)
+            ->where('fecha_fin', '>=', $today)
+            ->whereHas('habitacion', function ($query) {
+                $query->where('estado', 'disponible');
+            })
+            ->get();
+
+        foreach ($activeBookings as $booking) {
+            $booking->habitacion->update(['estado' => 'ocupada']);
         }
 
         $this->info('Estados de las habitaciones actualizados con éxito.');

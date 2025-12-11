@@ -8,6 +8,7 @@ use App\Models\Pedido;
 use App\Models\PedidoDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class HabitacionController extends Controller
 {
@@ -111,6 +112,10 @@ class HabitacionController extends Controller
             'fecha_fin' => 'required|date|after:fecha_inicio',
         ]);
 
+        if ($habitacion->estado !== 'disponible') {
+            return back()->withErrors(['not_available' => 'La habitación no está disponible para reservar.']);
+        }
+
         // Check for double booking
         $isBooked = PedidoDetalle::where('habitacion_id', $habitacion->id)
             ->where('fecha_inicio', '<', $request->fecha_fin)
@@ -121,10 +126,16 @@ class HabitacionController extends Controller
             return back()->withErrors(['double_booking' => 'La habitación ya está reservada para las fechas seleccionadas.']);
         }
 
+        // Calculate number of nights and total price
+        $fechaInicio = Carbon::parse($request->fecha_inicio);
+        $fechaFin = Carbon::parse($request->fecha_fin);
+        $noches = $fechaFin->diffInDays($fechaInicio);
+        $total = $noches * $habitacion->producto->precio;
+
         // Create order
         $pedido = Pedido::create([
             'user_id' => Auth::id(),
-            'total' => $habitacion->producto->precio,
+            'total' => $total,
             'estado' => 'completado',
         ]);
 
@@ -139,9 +150,20 @@ class HabitacionController extends Controller
             'fecha_fin' => $request->fecha_fin,
         ]);
 
-        // Update room status
-        $habitacion->update(['estado' => 'ocupada']);
+        // If the booking starts today, update the room status immediately
+        if ($fechaInicio->isToday()) {
+            $habitacion->update(['estado' => 'ocupada']);
+        }
 
-        return redirect()->route('web.habitaciones')->with('success', 'Reserva realizada con éxito.');
+        return redirect()->route('habitaciones.gallery')->with('success', 'Reserva realizada con éxito.');
+    }
+
+    /**
+     * Display a gallery of rooms for booking.
+     */
+    public function gallery()
+    {
+        $habitaciones = Habitacion::with('producto')->paginate(6);
+        return view('admin.habitaciones.gallery', compact('habitaciones'));
     }
 }

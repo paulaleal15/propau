@@ -25,12 +25,12 @@ Route::get('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->na
 Route::get('/carrito/vaciar', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/habitaciones', [WebController::class, 'habitaciones'])->name('web.habitaciones');
     Route::resource('usuarios', UserController::class);
     Route::patch('usuarios/{usuario}/toggle', [UserController::class, 'toggleStatus'])->name('usuarios.toggle');
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductoController::class);
     Route::resource('habitaciones', HabitacionController::class);
+    Route::get('/habitaciones/gallery', [HabitacionController::class, 'gallery'])->name('habitaciones.gallery');
     Route::get('/habitaciones/{habitacion}/booking', [HabitacionController::class, 'booking'])->name('habitaciones.booking');
     Route::post('/habitaciones/{habitacion}/booking', [HabitacionController::class, 'storeBooking'])->name('habitaciones.storeBooking');
 
