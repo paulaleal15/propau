@@ -26,7 +26,7 @@ class CarritoController extends Controller
             ];
         }
         session()->put('carrito', $carrito);
-        return redirect()->back()->with('mensaje', 'Producto agregado al carrito');
+        return redirect()->route('carrito.mostrar')->with('mensaje', 'Producto agregado al carrito');
     }
 
     public function mostrar(){
