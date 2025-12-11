@@ -114,7 +114,7 @@
                             </button>
                         </form>
                         <!-- Continue Shopping -->
-                        <a href="/" class="btn btn-outline-secondary w-100 mt-3">
+                        <a href="{{ route('web.habitaciones') }}" class="btn btn-outline-secondary w-100 mt-3">
                             <i class="bi bi-arrow-left me-1"></i>Cancelar Pago
                         </a>
                     </div>
