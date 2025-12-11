@@ -4,7 +4,7 @@
       <h1 class="display-4 fw-bolder">Imperial Suites</h1>
       <p class="lead fw-normal text-white mb-0">Gestión Hotelera</p>
       <br>
-      <a href="{{ route('carrito.mostrar') }}" class="bg-reserva">
+      <a href="{{ route('web.habitaciones') }}" class="bg-reserva">
          Reservar una Habitación
     </a>
     </div>
