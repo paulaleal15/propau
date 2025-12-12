@@ -12,5 +12,6 @@ class Producto extends Model
         'precio',
         'descripcion',
         'imagen',
+        'max_huespedes',
     ];
 }
