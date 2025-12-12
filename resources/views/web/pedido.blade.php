@@ -11,48 +11,41 @@
                     <div class="card-header bg-light">
                         <div class="row">
                             <div class="col-md-5"><strong>Habitación</strong></div>
-                            <div class="col-md-2 text-center"><strong>Precio</strong></div>
-                            <div class="col-md-2 text-center"><strong>Cantidad</strong></div>
+                            <div class="col-md-2 text-center"><strong>Precio / Noche</strong></div>
+                            <div class="col-md-2 text-center"><strong>Noches</strong></div>
                             <div class="col-md-3 text-end"><strong>Subtotal</strong></div>
                         </div>
                     </div>
                     <div class="card-body" id="cartItems">
-                        @forelse($carrito as $id => $item)
+                        @forelse($carrito as $carritoId => $item)
                         <!-- Product-->
                         <div class="row align-items-center mb-3 cart-item">
-                            <!--Nombre y código-->
+                            <!--Nombre y detalles de reserva-->
                             <div class="col-md-5 d-flex align-items-center">
                                 <img src="{{ asset('uploads/productos/' . $item['imagen']) }}"
                                 style="width: 80px; height: 80px; object-fit: cover;" alt="{{ $item['nombre'] }}">
                                 <div class="ms-3">
                                     <h6 class="mb-0">{{ $item['nombre'] }}</h6>
-                                    <small class="text-muted">{{ $item['codigo'] }}</small>
+                                    <small class="text-muted d-block">Llegada: {{ \Carbon\Carbon::parse($item['fecha_inicio'])->format('d/m/Y') }}</small>
+                                    <small class="text-muted d-block">Salida: {{ \Carbon\Carbon::parse($item['fecha_fin'])->format('d/m/Y') }}</small>
+                                    <small class="text-muted d-block">Huéspedes: {{ $item['huespedes'] }}</small>
                                 </div>
                             </div>
                             <!--Precio-->
                             <div class="col-md-2 text-center">
                                 <span class="fw-bold">${{ number_format($item['precio'], 2) }}</span>
                             </div>
-                            <!--Cantidad-->
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div class="input-group input-group-sm" style="max-width: 100px;">
-                                    <a class="btn btn-outline-secondary" href="{{ route('carrito.restar', ['producto_id' => $id]) }}"
-                                        data-action="decrease">-</a>
-                                    <input type="text" class="form-control text-center" value="{{ $item['cantidad'] }}"
-                                        readonly>
-                                        <a href="{{ route('carrito.sumar', ['producto_id' => $id]) }}" class="btn btn-outline-secondary btn-sm">
-                                            +
-                                        </a>
-                                </div>
+                            <!--Noches-->
+                            <div class="col-md-2 text-center">
+                                <span>{{ $item['cantidad'] }}</span>
                             </div>
 
                             <!--Subtotal-->
                             <div class="col-md-3 d-flex align-items-center justify-content-end">
                                 <div class="text-end me-3">
-                                    <span
-                                        class="fw-bold subtotal">${{ number_format($item['precio'] * $item['cantidad'], 2) }}</span>
+                                    <span class="fw-bold subtotal">${{ number_format($item['precio'] * $item['cantidad'], 2) }}</span>
                                 </div>
-                                <a class="btn btn-sm btn-outline-danger" href="{{ route('carrito.eliminar', $id) }}">
+                                <a class="btn btn-sm btn-outline-danger" href="{{ route('carrito.eliminar', $carritoId) }}">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </div>

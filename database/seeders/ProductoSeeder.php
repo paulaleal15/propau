@@ -19,6 +19,7 @@ class ProductoSeeder extends Seeder
             'precio' => 50.00,
             'descripcion' => 'Perfecta para viajeros solitarios, equipada con todas las comodidades modernas.',
             'imagen' => 'habitacion-individual.jpg',
+            'max_huespedes' => 1,
         ]);
 
         Producto::create([
@@ -27,6 +28,7 @@ class ProductoSeeder extends Seeder
             'precio' => 75.00,
             'descripcion' => 'Ideal para parejas, con una cama matrimonial o dos camas individuales.',
             'imagen' => 'habitacion-doble.jpg',
+            'max_huespedes' => 2,
         ]);
 
         Producto::create([
@@ -35,6 +37,7 @@ class ProductoSeeder extends Seeder
             'precio' => 95.00,
             'descripcion' => 'Espacio y confort para pequeños grupos o familias.',
             'imagen' => 'habitacion-triple.jpg',
+            'max_huespedes' => 3,
         ]);
 
         Producto::create([
@@ -43,6 +46,7 @@ class ProductoSeeder extends Seeder
             'precio' => 120.00,
             'descripcion' => 'Un espacio de lujo con sala de estar separada y vistas panorámicas.',
             'imagen' => 'suite-junior.jpg',
+            'max_huespedes' => 2,
         ]);
 
         Producto::create([
@@ -51,6 +55,7 @@ class ProductoSeeder extends Seeder
             'precio' => 250.00,
             'descripcion' => 'La máxima expresión de lujo y exclusividad, con servicios premium.',
             'imagen' => 'suite-presidencial.jpg',
+            'max_huespedes' => 4,
         ]);
 
         Producto::create([
@@ -59,6 +64,7 @@ class ProductoSeeder extends Seeder
             'precio' => 150.00,
             'descripcion' => 'Amplia y cómoda, diseñada para que toda la familia disfrute de su estancia.',
             'imagen' => 'habitacion-familiar.jpg',
+            'max_huespedes' => 5,
         ]);
     }
 }

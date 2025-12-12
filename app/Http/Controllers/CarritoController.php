@@ -8,25 +8,49 @@ use App\Models\Producto;
 class CarritoController extends Controller
 {
     public function agregar(Request $request){
+        $request->validate([
+            'producto_id' => 'required|exists:productos,id',
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
+            'huespedes' => 'required|integer|min:1',
+        ]);
+
         $producto = Producto::findOrFail($request->producto_id);
-        $cantidad = $request->cantidad ?? 1;
+
+        if ($request->huespedes > $producto->max_huespedes) {
+            return back()->withErrors(['huespedes' => 'El número de huéspedes supera el máximo permitido para esta habitación.'])->withInput();
+        }
+
+        $fechaInicio = new \DateTime($request->fecha_inicio);
+        $fechaFin = new \DateTime($request->fecha_fin);
+        $diferencia = $fechaInicio->diff($fechaFin);
+        $noches = $diferencia->days;
+
+        if ($noches <= 0) {
+            return back()->withErrors(['fecha_fin' => 'La fecha de salida debe ser posterior a la fecha de llegada.'])->withInput();
+        }
 
         $carrito = session()->get('carrito', []);
-        if (isset($carrito[$producto->id])) {
-            // Ya existe en el carrito, solo aumenta la cantidad
-            $carrito[$producto->id]['cantidad'] += $cantidad;
-        } else {
-            // No existe, lo agregamos
-            $carrito[$producto->id] = [
-                'codigo' => $producto->codigo,
-                'nombre' => $producto->nombre,
-                'precio' => $producto->precio,
-                'imagen' => $producto->imagen,
-                'cantidad' => $cantidad,
-            ];
+        $carritoId = $producto->id . '-' . strtotime($request->fecha_inicio);
+
+        if (isset($carrito[$carritoId])) {
+             return redirect()->route('carrito.mostrar')->with('mensaje', 'Esta reserva ya se encuentra en tu carrito.');
         }
+
+        $carrito[$carritoId] = [
+            'id' => $producto->id,
+            'codigo' => $producto->codigo,
+            'nombre' => $producto->nombre,
+            'precio' => $producto->precio,
+            'imagen' => $producto->imagen,
+            'cantidad' => $noches,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'huespedes' => $request->huespedes,
+        ];
+
         session()->put('carrito', $carrito);
-        return redirect()->route('carrito.mostrar')->with('mensaje', 'Producto agregado al carrito');
+        return redirect()->route('carrito.mostrar')->with('mensaje', 'Reserva añadida al carrito correctamente.');
     }
 
     public function mostrar(){
@@ -34,45 +58,13 @@ class CarritoController extends Controller
         return view('web.pedido', compact('carrito'));
     }
 
-    public function sumar(Request $request){
-        $productoId = $request->producto_id;
-
+    public function eliminar($carritoId){
         $carrito = session()->get('carrito', []);
-
-        if (isset($carrito[$productoId])) {
-            $carrito[$productoId]['cantidad'] += 1;
+        if (isset($carrito[$carritoId])) {
+            unset($carrito[$carritoId]);
             session()->put('carrito', $carrito);
         }
-
-        return redirect()->back()->with('mensaje', 'Cantidad actualizada en el carrito');
-    }
-
-    public function restar(Request $request){
-        $productoId = $request->producto_id;
-
-        $carrito = session()->get('carrito', []);
-
-        if (isset($carrito[$productoId])) {
-            if ($carrito[$productoId]['cantidad'] > 1) {
-                // Resta 1 si la cantidad es mayor a 1
-                $carrito[$productoId]['cantidad'] -= 1;
-            } 
-            else{
-                // Si es 1, lo quitamos del carrito
-                unset($carrito[$productoId]);
-            }
-            session()->put('carrito', $carrito);
-        }
-
-        return redirect()->back()->with('mensaje', 'Cantidad actualizada en el carrito');
-    }
-    public function eliminar($id){
-        $carrito = session()->get('carrito');
-        if (isset($carrito[$id])) {
-            unset($carrito[$id]);
-            session()->put('carrito', $carrito);
-        }
-        return redirect()->back()->with('success', 'Producto eliminado');
+        return redirect()->back()->with('mensaje', 'Reserva eliminada del carrito.');
     }
     public function vaciar(){
         session()->forget('carrito');
