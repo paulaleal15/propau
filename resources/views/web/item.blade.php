@@ -54,7 +54,7 @@
                             </select>
                         </div>
                         <input type="hidden" name="producto_id" value="{{$producto->id}}">
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 mt-4">
                                 <button class="btn btn-dark btn-lg" type="submit">
                                 <i class="bi-cart-fill me-1"></i>
                                 Reservar Ahora
