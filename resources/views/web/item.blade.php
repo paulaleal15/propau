@@ -45,7 +45,7 @@
                                 <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}" required>
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="huespedes" class="form-label fw-bold">HUÉSPEDES</label>
                             <select class="form-select" id="huespedes" name="huespedes" required>
                                 @for ($i = 1; $i <= $producto->max_huespedes; $i++)
@@ -54,7 +54,7 @@
                             </select>
                         </div>
                         <input type="hidden" name="producto_id" value="{{$producto->id}}">
-                        <div class="d-grid gap-2 mt-4">
+                        <div class="d-grid gap-2">
                                 <button class="btn btn-dark btn-lg" type="submit">
                                 <i class="bi-cart-fill me-1"></i>
                                 Reservar Ahora
