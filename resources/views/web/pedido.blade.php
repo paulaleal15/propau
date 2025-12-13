@@ -28,7 +28,20 @@
                                     <h6 class="mb-0">{{ $item['nombre'] }}</h6>
                                     <small class="text-muted d-block">Llegada: {{ \Carbon\Carbon::parse($item['fecha_inicio'])->format('d/m/Y') }}</small>
                                     <small class="text-muted d-block">Salida: {{ \Carbon\Carbon::parse($item['fecha_fin'])->format('d/m/Y') }}</small>
-                                    <small class="text-muted d-block">Huéspedes: {{ $item['huespedes'] }}</small>
+                                    <div class="d-flex align-items-center">
+                                        <small class="text-muted d-block me-2">Huéspedes:</small>
+                                        <form action="{{ route('carrito.actualizarHuespedes') }}" method="POST" class="requires-validation" novalidate>
+                                            @csrf
+                                            <input type="hidden" name="carrito_id" value="{{ $carritoId }}">
+                                            <select name="huespedes" class="form-select form-select-sm" style="width: 80px;" onchange="this.form.submit()">
+                                                @for ($i = 1; $i <= ($item['max_huespedes'] ?? 1); $i++)
+                                                    <option value="{{ $i }}" {{ $item['huespedes'] == $i ? 'selected' : '' }}>
+                                                        {{ $i }}
+                                                    </option>
+                                                @endfor
+                                            </select>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <!--Precio-->

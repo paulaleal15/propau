@@ -19,8 +19,7 @@ Route::get('/producto/{id}', [WebController::class, 'show'])->name('web.show');
 
 Route::get('/carrito', [CarritoController::class, 'mostrar'])->name('carrito.mostrar');
 Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
-Route::get('/carrito/sumar', [CarritoController::class, 'sumar'])->name('carrito.sumar');
-Route::get('/carrito/restar', [CarritoController::class, 'restar'])->name('carrito.restar');
+Route::post('/carrito/actualizar-huespedes', [CarritoController::class, 'actualizarHuespedes'])->name('carrito.actualizarHuespedes');
 Route::get('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
 Route::get('/carrito/vaciar', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
 

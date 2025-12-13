@@ -47,6 +47,7 @@ class CarritoController extends Controller
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
             'huespedes' => $request->huespedes,
+            'max_huespedes' => $producto->max_huespedes,
         ];
 
         session()->put('carrito', $carrito);
@@ -69,5 +70,33 @@ class CarritoController extends Controller
     public function vaciar(){
         session()->forget('carrito');
         return redirect()->back()->with('success', 'Carrito vaciado');
+    }
+
+    public function actualizarHuespedes(Request $request)
+    {
+        $request->validate([
+            'carrito_id' => 'required|string',
+            'huespedes' => 'required|integer|min:1',
+        ]);
+
+        $carritoId = $request->carrito_id;
+        $huespedes = (int) $request->huespedes;
+
+        $carrito = session()->get('carrito', []);
+
+        if (isset($carrito[$carritoId])) {
+            $item = $carrito[$carritoId];
+
+            if ($huespedes > $item['max_huespedes']) {
+                return back()->with('error', 'El número de huéspedes supera el máximo permitido.');
+            }
+
+            $carrito[$carritoId]['huespedes'] = $huespedes;
+            session()->put('carrito', $carrito);
+
+            return back()->with('mensaje', 'El número de huéspedes ha sido actualizado.');
+        }
+
+        return back()->with('error', 'No se pudo actualizar la reserva.');
     }
 }
