@@ -52,10 +52,15 @@ class PedidoController extends Controller
                 'user_id' => auth()->id(), 'total' => $total, 'estado' => 'pendiente'
             ]);
             // 3. Crear los detalles del pedido
-            foreach ($carrito as $productoId => $item) {
+            foreach ($carrito as $carritoId => $item) {
                 PedidoDetalle::create([
-                    'pedido_id' => $pedido->id, 'producto_id' => $productoId,
-                    'cantidad' => $item['cantidad'], 'precio' => $item['precio'],
+                    'pedido_id'    => $pedido->id,
+                    'producto_id'  => $item['id'],
+                    'cantidad'     => $item['cantidad'],
+                    'precio'       => $item['precio'],
+                    'fecha_inicio' => $item['fecha_inicio'],
+                    'fecha_fin'    => $item['fecha_fin'],
+                    'huespedes'    => $item['huespedes'],
                 ]);
             }
             // 4. Vaciar el carrito de la sesión
