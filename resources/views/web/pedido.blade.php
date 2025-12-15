@@ -113,12 +113,9 @@
                             <strong id="orderTotal">${{ number_format($total, 2) }}</strong>
                         </div>
                         <!-- Checkout Button -->
-                         <form action="{{route('pedido.realizar')}}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-primary w-100" id="checkout">
-                                <i class="bi bi-credit-card me-1"></i>Proceder al Pago
-                            </button>
-                        </form>
+                        <a href="{{ route('pago.mostrar') }}" class="btn btn-primary w-100">
+                            <i class="bi bi-credit-card me-1"></i>Proceder al Pago
+                        </a>
                         <!-- Continue Shopping -->
                         <a href="{{ route('web.habitaciones') }}" class="btn btn-outline-secondary w-100 mt-3">
                             <i class="bi bi-arrow-left me-1"></i>Seguir Reservando

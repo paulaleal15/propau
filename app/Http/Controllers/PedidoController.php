@@ -34,23 +34,11 @@ class PedidoController extends Controller
         return view('pedido.index', compact('registros', 'texto'));
     }
 
-    public function realizar(Request $request)
-    {
-        $carrito = session('carrito', []);
-
-        if (empty($carrito)) {
-            return redirect()->back()->with('mensaje', 'El carrito está vacío.');
-        }
-
-        // Redirigir a la vista de pago solo con el carrito
-        return redirect()->route('pago.mostrar')->with('carrito', $carrito);
-    }
-
     public function mostrarPago()
     {
-        // Asegúrate de que los datos del carrito están en la sesión flash
-        if (!session()->has('carrito')) {
-            return redirect()->route('carrito.mostrar')->with('error', 'No hay información de pago. Por favor, realiza el pedido de nuevo.');
+        $carrito = session('carrito', []);
+        if (empty($carrito)) {
+            return redirect()->route('carrito.mostrar')->with('error', 'No hay nada que pagar. Tu carrito está vacío.');
         }
         return view('web.pago');
     }

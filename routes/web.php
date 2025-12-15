@@ -29,7 +29,6 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductoController::class);
 
-    Route::post('/pedido/realizar', [PedidoController::class, 'realizar'])->name('pedido.realizar');
     Route::get('/pago', [PedidoController::class, 'mostrarPago'])->name('pago.mostrar');
     Route::post('/pago/procesar', [PedidoController::class, 'procesarPago'])->name('pago.procesar');
     Route::get('/perfil/pedidos', [PedidoController::class, 'index'])->name('perfil.pedidos');
