@@ -37,7 +37,7 @@
                                                         <img src="{{ asset('uploads/productos/' . $details['imagen']) }}" alt="{{ $details['nombre'] }}" class="me-3 rounded" style="width: 80px; height: 80px; object-fit: cover;">
                                                         <div>
                                                             <h6 class="mb-0">{{ $details['nombre'] }}</h6>
-                                                            <small class="text-muted d-block">S/ {{ number_format($details['precio'], 2) }} / noche</small>
+                                                            <small class="text-muted d-block"> {{ number_format($details['precio'], 2) }} / noche</small>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -47,7 +47,7 @@
                                                     <small class="d-block"><strong>Noches:</strong> {{ $details['cantidad'] }}</small>
                                                     <small class="d-block"><strong>Huéspedes:</strong> {{ $details['huespedes'] }}</small>
                                                 </td>
-                                                <td class="text-end fw-bold">S/ {{ number_format($subtotal, 2) }}</td>
+                                                <td class="text-end fw-bold">$/ {{ number_format($subtotal, 2) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -74,7 +74,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
                             <h5 class="mb-0">Monto Total</h5>
-                            <h5 class="mb-0 fw-bold">S/ {{ number_format($total, 2) }}</h5>
+                            <h5 class="mb-0 fw-bold">$/ {{ number_format($total, 2) }}</h5>
                         </div>
                         <hr>
                         <!-- Payment Form -->

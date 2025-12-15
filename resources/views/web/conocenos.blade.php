@@ -14,7 +14,7 @@
     <div class="container px-5">
         <div class="row gx-5">
             <div class="col-xl-8">
-                <h1 class="fw-bolder fs-2 mb-4">Conócenos</h1>
+                <h1 class="fw-bolder fs-2 mb-4">Nosotros</h1>
                 <p class="lead fw-normal text-muted mb-4">Descubre la historia, misión y los servicios excepcionales que hacen de nuestro hotel tu mejor opción para una estancia inolvidable.</p>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="{{ asset('img/image.png') }}" alt="Nuestra Historia" /></div>
             <div class="col-lg-6">
                 <h2 class="fw-bolder">Nuestra Historia</h2>
-                <p class="lead fw-normal text-muted mb-0">Fundado en [Año], nuestro hotel ha crecido desde un modesto comienzo hasta convertirse en un referente de hospitalidad y lujo. Cada rincón de nuestro hotel cuenta una historia de dedicación y pasión por el servicio.</p>
+                <p class="lead fw-normal text-muted mb-0">Imperial Suites fue creado con el objetivo de ofrecer comodidad, buen servicio y una experiencia agradable a sus huéspedes. Desde sus inicios, se ha enfocado en la atención personalizada y en el uso de la tecnología para mejorar la gestión hotelera y la satisfacción del cliente.</p>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
             <div class="col-lg-6 order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="{{ asset('img/image2.jpeg') }}" alt="Misión y Visión" /></div>
             <div class="col-lg-6">
                 <h2 class="fw-bolder">Misión y Visión</h2>
-                <p class="lead fw-normal text-muted mb-0">Nuestra misión es ofrecer experiencias memorables a través de un servicio personalizado y de alta calidad. Aspiramos a ser reconocidos como el hotel líder en nuestra categoría, innovando constantemente para superar las expectativas de nuestros huéspedes.</p>
+                <p class="lead fw-normal text-muted mb-0">Imperial Suites tiene como misión brindar un servicio de alojamiento de calidad, con atención personalizada y comodidad para sus huéspedes, apoyándose en el uso de la tecnología; y como visión, consolidarse como un hotel reconocido por su buen servicio, innovación y compromiso con la satisfacción del cliente en el sector hotelero.</p>
             </div>
         </div>
     </div>

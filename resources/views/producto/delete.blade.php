@@ -10,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ¿Usted desea eliminar el registro {{$reg->name}} ?
+                    ¿Usted desea eliminar la {{$reg->nombre}} ?
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cerrar</button>

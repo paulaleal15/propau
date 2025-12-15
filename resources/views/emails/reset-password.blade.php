@@ -1,4 +1,4 @@
-<p>ArtCode.</p>
+<p>Impeprial Suites</p>
 <p>Has solicitado restablecer tu contraseña.</p>
 <p>Haz clic en el siguiente enlace para restablecerla:</p>
 <a href="{{ url('/password/reset/'.$token) }}">Restablecer contraseña</a>

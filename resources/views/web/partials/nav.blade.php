@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('web.conocenos') }}">Conócenos</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('web.conocenos') }}">Nosotros</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('web.habitaciones') }}">Habitaciones</a></li>
 
                 <li class="nav-item dropdown">
@@ -15,15 +15,15 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">{{auth()->user()->name}}</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Calendario de reservas</a></li>
+                        <li><a class="dropdown-item" href="{{route('perfil.edit')}}">Perfil</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item" href="{{route('perfil.edit')}}">Gestion de reservas</a></li>
+                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Reservaciones</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item" href="{{route('perfil.pedidos')}}">Inventario y tarifas</a></li>
+                        <li><a class="dropdown-item" href="{{route('productos.index')}}">Habitaciones</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>

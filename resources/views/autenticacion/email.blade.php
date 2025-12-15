@@ -7,11 +7,11 @@
       href="/"
       class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover"
     >
-      <h1 class="mb-0"><b>Imperial Suites</b>LTE</h1>
+      <h1 class="mb-0"><b>Imperial Suites</b>Gestion Hotelera</h1>
     </a>
   </div>
   <div class="card-body login-card-body">
-    <p class="login-box-msg">Ingrese su email para recuperar su password</p>
+    <p class="login-box-msg">Ingrese su correo para recuperar su contraseña</p>
     @if(session('error'))
       <div class="alert alert-danger">
         {{session('error')}}
@@ -28,7 +28,7 @@
       <div class="input-group mb-1">
         <div class="form-floating">
           <input id="loginEmail" type="email" name="email" value="{{old('email')}}" class="form-control" value="" placeholder="" />
-          <label for="loginEmail">Email</label>
+          <label for="loginEmail">Correo electronico</label>
         </div>
         <div class="input-group-text"><span class="bi bi-envelope"></span></div>
         @error('email')

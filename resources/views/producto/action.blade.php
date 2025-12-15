@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h3 class="card-title">Productos</h3>
+                        <h3 class="card-title">Habitaciones</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -27,7 +27,7 @@
                                      @enderror
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="nombre" class="form-label">nombre</label>
+                                    <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                                      id="nombre" name="nombre" value="{{old('nombre',  $registro->nombre ??'')}}" required>
                                      @error('nombre')
