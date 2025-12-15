@@ -116,12 +116,12 @@
                          <form action="{{route('pedido.realizar')}}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-primary w-100" id="checkout">
-                                <i class="bi bi-credit-card me-1"></i>Realizar Reserva
+                                <i class="bi bi-credit-card me-1"></i>Proceder al Pago
                             </button>
                         </form>
                         <!-- Continue Shopping -->
                         <a href="{{ route('web.habitaciones') }}" class="btn btn-outline-secondary w-100 mt-3">
-                            <i class="bi bi-arrow-left me-1"></i>Cancelar Pago
+                            <i class="bi bi-arrow-left me-1"></i>Seguir Reservando
                         </a>
                     </div>
                 </div>
