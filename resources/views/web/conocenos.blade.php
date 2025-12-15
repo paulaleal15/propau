@@ -1,6 +1,15 @@
 @extends('web.app')
 @section('contenido')
 
+<style>
+    .service-card {
+        transition: transform 0.3s ease-in-out;
+    }
+    .service-card:hover {
+        transform: translateY(-10px);
+    }
+</style>
+
 <section class="py-5 bg-light">
     <div class="container px-5">
         <div class="row gx-5">
@@ -16,7 +25,7 @@
 <section class="py-5">
     <div class="container px-5 my-5">
         <div class="row gx-5 align-items-center">
-            <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="Nuestra Historia" /></div>
+            <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="{{ asset('img/image.png') }}" alt="Nuestra Historia" /></div>
             <div class="col-lg-6">
                 <h2 class="fw-bolder">Nuestra Historia</h2>
                 <p class="lead fw-normal text-muted mb-0">Fundado en [Año], nuestro hotel ha crecido desde un modesto comienzo hasta convertirse en un referente de hospitalidad y lujo. Cada rincón de nuestro hotel cuenta una historia de dedicación y pasión por el servicio.</p>
@@ -47,21 +56,21 @@
         </div>
         <div class="row gx-5">
             <div class="col-lg-4 mb-5">
-                <div class="text-center">
+                <div class="text-center service-card">
                     <i class="bi bi-wifi fs-1 text-primary"></i>
                     <h3 class="fw-bolder">Wi-Fi de Alta Velocidad</h3>
                     <p class="text-muted">Conéctate sin problemas en todas nuestras instalaciones.</p>
                 </div>
             </div>
             <div class="col-lg-4 mb-5">
-                <div class="text-center">
+                <div class="text-center service-card">
                     <i class="bi bi-cup-straw fs-1 text-primary"></i>
                     <h3 class="fw-bolder">Restaurante y Bar</h3>
                     <p class="text-muted">Disfruta de una exquisita gastronomía y cócteles de autor.</p>
                 </div>
             </div>
             <div class="col-lg-4 mb-5">
-                <div class="text-center">
+                <div class="text-center service-card">
                     <i class="bi bi-person-workspace fs-1 text-primary"></i>
                     <h3 class="fw-bolder">Salas de Conferencias</h3>
                     <p class="text-muted">Espacios equipados para tus eventos y reuniones de negocios.</p>
