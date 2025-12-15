@@ -134,7 +134,7 @@
                             </div>
 
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg">
+                                <button type="submit" id="submit-button" class="btn btn-primary btn-lg">
                                     <i class="bi bi-lock-fill me-1"></i> Pagar Ahora
                                 </button>
                             </div>
@@ -152,7 +152,16 @@
 document.addEventListener('DOMContentLoaded', function () {
     const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
     const creditCardForm = document.getElementById('credit-card-form');
-    const creditCardInputs = creditCardForm.querySelectorAll('input');
+    const creditCardInputs = Array.from(creditCardForm.querySelectorAll('input'));
+    const submitButton = document.getElementById('submit-button');
+
+    function validateForm() {
+        let isFormValid = true;
+        if (document.getElementById('credit-card').checked) {
+            isFormValid = creditCardInputs.every(input => input.value.trim() !== '');
+        }
+        submitButton.disabled = !isFormValid;
+    }
 
     function toggleCreditCardForm() {
         if (document.getElementById('credit-card').checked) {
@@ -162,10 +171,15 @@ document.addEventListener('DOMContentLoaded', function () {
             creditCardForm.style.display = 'none';
             creditCardInputs.forEach(input => input.required = false);
         }
+        validateForm();
     }
 
     paymentMethods.forEach(method => {
         method.addEventListener('change', toggleCreditCardForm);
+    });
+
+    creditCardInputs.forEach(input => {
+        input.addEventListener('input', validateForm);
     });
 
     // Initial check
