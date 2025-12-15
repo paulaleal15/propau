@@ -38,7 +38,7 @@
 <section class="py-5 bg-light">
     <div class="container px-5 my-5">
         <div class="row gx-5 align-items-center">
-            <div class="col-lg-6 order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="Misión y Visión" /></div>
+            <div class="col-lg-6 order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="{{ asset('img/image2.jpeg') }}" alt="Misión y Visión" /></div>
             <div class="col-lg-6">
                 <h2 class="fw-bolder">Misión y Visión</h2>
                 <p class="lead fw-normal text-muted mb-0">Nuestra misión es ofrecer experiencias memorables a través de un servicio personalizado y de alta calidad. Aspiramos a ser reconocidos como el hotel líder en nuestra categoría, innovando constantemente para superar las expectativas de nuestros huéspedes.</p>
@@ -71,7 +71,7 @@
             </div>
             <div class="col-lg-4 mb-5">
                 <div class="text-center service-card">
-                    <i class="bi bi-person-workspace fs-1 text-primary"></i>
+                    <i class="bi bi-building fs-1 text-primary"></i>
                     <h3 class="fw-bolder">Salas de Conferencias</h3>
                     <p class="text-muted">Espacios equipados para tus eventos y reuniones de negocios.</p>
                 </div>
