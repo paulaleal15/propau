@@ -27,7 +27,11 @@
     </head>
     <body>
         <!-- Navigation-->
-        @include('web.partials.nav')
+        @if(Auth::check())
+            @include('plantilla.nav')
+        @else
+            @include('web.partials.nav')
+        @endif
         <!-- Header-->
         @if(View::hasSection('header'))
             @include('web.partials.header')
