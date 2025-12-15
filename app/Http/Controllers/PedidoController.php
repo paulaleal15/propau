@@ -7,6 +7,7 @@ use App\Models\Pedido;
 use App\Models\PedidoDetalle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class PedidoController extends Controller
 {
@@ -42,15 +43,17 @@ class PedidoController extends Controller
             return redirect()->back()->with('mensaje', 'El carrito está vacío.');
         }
 
-        // Redirigir a la vista de pago solo con el carrito
-        return redirect()->route('pago.mostrar')->with('carrito', $carrito);
+        // Simplemente redirigir. El carrito ya está en la sesión principal.
+        return redirect()->route('pago.mostrar');
     }
 
     public function mostrarPago()
     {
-        // Asegúrate de que los datos del carrito están en la sesión flash
-        if (!session()->has('carrito')) {
-            return redirect()->route('carrito.mostrar')->with('error', 'No hay información de pago. Por favor, realiza el pedido de nuevo.');
+        $carrito = session('carrito', []);
+
+        // Comprobar si el carrito (de la sesión principal) está vacío
+        if (empty($carrito)) {
+            return redirect()->route('carrito.mostrar')->with('error', 'Tu carrito está vacío.');
         }
         return view('web.pago');
     }
@@ -101,7 +104,7 @@ class PedidoController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            // Log::error('Error al procesar el pago: ' . $e->getMessage());
+            Log::error('Error al procesar el pago: ' . $e->getMessage());
             return redirect()->route('pago.mostrar')->with('error', 'Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.');
         }
     }
