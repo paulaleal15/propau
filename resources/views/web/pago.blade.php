@@ -81,46 +81,60 @@
                         <form action="{{ route('pago.procesar') }}" method="POST" id="payment-form" class="requires-validation" novalidate>
                             @csrf
                             <div class="mb-3">
-                                <label for="payment-method" class="form-label">Método de Pago</label>
-                                <div class="d-flex bg-light p-2 rounded">
+                                <label class="form-label">Método de Pago</label>
+                                <div class="bg-light p-2 rounded">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="payment-method" id="credit-card" checked>
+                                        <input class="form-check-input" type="radio" name="payment_method" id="credit-card" value="credit_card" checked>
                                         <label class="form-check-label" for="credit-card">
                                             <i class="bi bi-credit-card-fill me-1"></i> Tarjeta de Crédito/Débito
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment_method" id="cash" value="cash">
+                                        <label class="form-check-label" for="cash">
+                                            <i class="bi bi-cash-coin me-1"></i> Efectivo
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment_method" id="pse" value="pse">
+                                        <label class="form-check-label" for="pse">
+                                            <i class="bi bi-bank me-1"></i> PSE
                                         </label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="card-name" class="form-label">Nombre en la Tarjeta</label>
-                                <input type="text" class="form-control" id="card-name" placeholder="Juan Pérez" required>
-                                <div class="invalid-feedback">
-                                    El nombre en la tarjeta es obligatorio.
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="card-number" class="form-label">Número de Tarjeta</label>
-                                <input type="text" class="form-control" id="card-number" placeholder="1111-2222-3333-4444" required>
-                                <div class="invalid-feedback">
-                                    El número de tarjeta es obligatorio.
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="expiration-date" class="form-label">Expiración</label>
-                                    <input type="text" class="form-control" id="expiration-date" placeholder="MM/AA" required>
+                            <div id="credit-card-form">
+                                <div class="mb-3">
+                                    <label for="card-name" class="form-label">Nombre en la Tarjeta</label>
+                                    <input type="text" class="form-control" id="card-name" placeholder="Juan Pérez" required>
                                     <div class="invalid-feedback">
-                                        La fecha de expiración es obligatoria.
+                                        El nombre en la tarjeta es obligatorio.
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="cvc" class="form-label">CVC</label>
-                                    <input type="text" class="form-control" id="cvc" placeholder="123" required>
+
+                                <div class="mb-3">
+                                    <label for="card-number" class="form-label">Número de Tarjeta</label>
+                                    <input type="text" class="form-control" id="card-number" placeholder="1111-2222-3333-4444" required>
                                     <div class="invalid-feedback">
-                                        El CVC es obligatorio.
+                                        El número de tarjeta es obligatorio.
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="expiration-date" class="form-label">Expiración</label>
+                                        <input type="text" class="form-control" id="expiration-date" placeholder="MM/AA" required>
+                                        <div class="invalid-feedback">
+                                            La fecha de expiración es obligatoria.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cvc" class="form-label">CVC</label>
+                                        <input type="text" class="form-control" id="cvc" placeholder="123" required>
+                                        <div class="invalid-feedback">
+                                            El CVC es obligatorio.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -139,4 +153,30 @@
     </div>
 </section>
 
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+    const creditCardForm = document.getElementById('credit-card-form');
+    const creditCardInputs = creditCardForm.querySelectorAll('input');
+
+    function toggleCreditCardForm() {
+        if (document.getElementById('credit-card').checked) {
+            creditCardForm.style.display = 'block';
+            creditCardInputs.forEach(input => input.required = true);
+        } else {
+            creditCardForm.style.display = 'none';
+            creditCardInputs.forEach(input => input.required = false);
+        }
+    }
+
+    paymentMethods.forEach(method => {
+        method.addEventListener('change', toggleCreditCardForm);
+    });
+
+    // Initial check
+    toggleCreditCardForm();
+});
+</script>
+@endpush
 @endsection
