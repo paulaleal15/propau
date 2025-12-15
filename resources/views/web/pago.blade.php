@@ -95,12 +95,6 @@
                                             <i class="bi bi-cash-coin me-1"></i> Efectivo
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="payment_method" id="pse" value="pse">
-                                        <label class="form-check-label" for="pse">
-                                            <i class="bi bi-bank me-1"></i> PSE
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
 
