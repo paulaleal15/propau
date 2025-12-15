@@ -34,25 +34,52 @@ class PedidoController extends Controller
         return view('pedido.index', compact('registros', 'texto'));
     }
 
-    public function realizar(Request $request){
-        $carrito = session()->get('carrito', []);
+    public function realizar(Request $request)
+    {
+        $carrito = session('carrito', []);
 
         if (empty($carrito)) {
             return redirect()->back()->with('mensaje', 'El carrito está vacío.');
         }
+
+        // Redirigir a la vista de pago solo con el carrito
+        return redirect()->route('pago.mostrar')->with('carrito', $carrito);
+    }
+
+    public function mostrarPago()
+    {
+        // Asegúrate de que los datos del carrito están en la sesión flash
+        if (!session()->has('carrito')) {
+            return redirect()->route('carrito.mostrar')->with('error', 'No hay información de pago. Por favor, realiza el pedido de nuevo.');
+        }
+        return view('web.pago');
+    }
+
+    public function procesarPago(Request $request)
+    {
+        $carrito = session('carrito', []);
+
+        if (empty($carrito)) {
+            return redirect()->route('carrito.mostrar')->with('mensaje', 'El carrito está vacío.');
+        }
+
         DB::beginTransaction();
         try {
-            // 1. Calcular el total
+            // 1. Calcular el total (de nuevo, por seguridad)
             $total = 0;
             foreach ($carrito as $item) {
                 $total += $item['precio'] * $item['cantidad'];
             }
+
             // 2. Crear el pedido
             $pedido = Pedido::create([
-                'user_id' => auth()->id(), 'total' => $total, 'estado' => 'pendiente'
+                'user_id' => auth()->id(),
+                'total' => $total,
+                'estado' => 'pagado' // Cambiado de 'pendiente' a 'pagado'
             ]);
+
             // 3. Crear los detalles del pedido
-            foreach ($carrito as $carritoId => $item) {
+            foreach ($carrito as $item) {
                 PedidoDetalle::create([
                     'pedido_id'    => $pedido->id,
                     'producto_id'  => $item['id'],
@@ -63,13 +90,19 @@ class PedidoController extends Controller
                     'huespedes'    => $item['huespedes'],
                 ]);
             }
+
             // 4. Vaciar el carrito de la sesión
             session()->forget('carrito');
+
             DB::commit();
-            return redirect()->route('carrito.mostrar')->with('mensaje', 'Pedido realizado correctamente.');
+
+            // Redirigir a una página de éxito o al listado de pedidos del usuario
+            return redirect()->route('perfil.pedidos')->with('mensaje', '¡Pago realizado y pedido completado con éxito!');
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Hubo un error al procesar el pedido.');
+            // Log::error('Error al procesar el pago: ' . $e->getMessage());
+            return redirect()->route('pago.mostrar')->with('error', 'Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.');
         }
     }
 
