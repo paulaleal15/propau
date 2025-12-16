@@ -11,7 +11,7 @@
                 <div class="small mb-1">SKU: {{$producto->codigo}}</div>
                 <h1 class="display-5 fw-bolder">{{$producto->nombre}}</h1>
                 <div class="fs-5 mb-5">
-                    <span>${{ number_format($producto->precio, 2) }} por noche</span>
+                    <span>COP {{ number_format($producto->precio, 0, ',', '.') }} por noche</span>
                 </div>
                 <p class="lead">{{$producto->descripcion}}</p>
 
