@@ -12,25 +12,35 @@ class PedidoController extends Controller
 {
     public function index(Request $request){
         $texto = $request->input('texto');
-        $query = Pedido::with('user', 'detalles.producto')->orderBy('id', 'desc');
+
+        // Cambiamos la consulta base a PedidoDetalle para listar reservas individuales
+        $query = PedidoDetalle::with('pedido.user', 'producto')->orderBy('fecha_inicio', 'desc');
 
         // Permisos
         if (auth()->user()->can('pedido-list')) {
-            // Puede ver todos los pedidos
+            // El admin puede ver todas las reservas
         } elseif (auth()->user()->can('pedido-view')) {
-            // Solo puede ver sus propios pedidos
-            $query->where('user_id', auth()->id());
+            // El usuario solo puede ver sus propias reservas
+            $query->whereHas('pedido', function ($q) {
+                $q->where('user_id', auth()->id());
+            });
         } else {
-            abort(403, 'No tienes permisos para ver pedidos.');
+            abort(403, 'No tienes permisos para ver las reservas.');
         }
 
-        // Búsqueda por nombre del usuario
+        // Búsqueda por nombre de usuario o nombre de habitación
         if (!empty($texto)) {
-            $query->whereHas('user', function ($q) use ($texto) {
-                $q->where('name', 'like', "%{$texto}%");
+            $query->where(function($q) use ($texto) {
+                $q->whereHas('pedido.user', function ($subq) use ($texto) {
+                    $subq->where('name', 'like', "%{$texto}%");
+                })->orWhereHas('producto', function ($subq) use ($texto) {
+                    $subq->where('nombre', 'like', "%{$texto}%");
+                });
             });
         }
+
         $registros = $query->paginate(10);
+
         return view('pedido.index', compact('registros', 'texto'));
     }
 
@@ -94,34 +104,4 @@ class PedidoController extends Controller
         }
     }
 
-    public function cambiarEstado(Request $request, $id){
-        $pedido = Pedido::findOrFail($id);
-        $estadoNuevo = $request->input('estado');
-
-        // Validar que el estado nuevo sea uno permitido
-        $estadosPermitidos = ['enviado', 'anulado', 'cancelado'];
-
-        if (!in_array($estadoNuevo, $estadosPermitidos)) {
-            abort(403, 'Estado no válido');
-        }
-
-        // Verificar permisos según el estado
-        if (in_array($estadoNuevo, ['enviado', 'anulado'])) {
-            if (!auth()->user()->can('pedido-anulate')) {
-                abort(403, 'No tiene permiso para cambiar a "enviado" o "anulado"');
-            }
-        }
-
-        if ($estadoNuevo === 'cancelado') {
-            if (!auth()->user()->can('pedido-cancel')) {
-                abort(403, 'No tiene permiso para cancelar pedidos');
-            }
-        }
-
-        // Cambiar el estado
-        $pedido->estado = $estadoNuevo;
-        $pedido->save();
-
-        return redirect()->back()->with('mensaje', 'El estado del pedido fue actualizado a "' . ucfirst($estadoNuevo) . '"');
-    }
 }

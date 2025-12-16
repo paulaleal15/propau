@@ -34,100 +34,50 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width: 150px">Opciones</th>
-                                        <th style="width: 20px">ID</th>
-                                        <th>Fecha</th>
+                                        <th>ID Reserva</th>
+                                        <th>Habitación</th>
                                         <th>Usuario</th>
-                                        <th>Total</th>
+                                        <th>Check-in</th>
+                                        <th>Check-out</th>
+                                        <th>Huéspedes</th>
                                         <th>Estado</th>
-                                        <th>Detalles</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(count($registros)<=0) <tr>
-                                        <td colspan="7">No hay registros que coincidan con la búsqueda</td>
+                                    @if($registros->isEmpty())
+                                        <tr>
+                                            <td colspan="7" class="text-center">No hay reservas que coincidan con la búsqueda.</td>
                                         </tr>
-                                        @else
-                                        @foreach($registros as $reg)
-                                        <tr class="align-middle">
-                                            <td>
-                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-estado-{{$reg->id}}"><i
-                                                        class="bi bi bi-arrow-repeat"></i>
-                                                </button>
-                                            </td>
-                                            <td>{{$reg->id}}</td>
-                                            <td>{{$reg->created_at->format('d/m/Y')}}</td>
-                                            <td>{{$reg->user->name}}</td>
-                                            <td>${{ number_format($reg->total, 2) }}</td>
-                                            <td>
-                                                @php
-                                                    $colores = [
-                                                        'pendiente' => 'bg-warning',
-                                                        'enviado' => 'bg-success',
-                                                        'anulado' => 'bg-danger',
-                                                        'cancelado' => 'bg-secondary',
-                                                    ];
-                                                @endphp
-                                                <span class="badge {{ $colores[$reg->estado] ?? 'bg-dark' }}">
-                                                    {{ ucfirst($reg->estado) }}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#detalles-{{ $reg->id }}">
-                                                    Ver detalles
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="collapse" id="detalles-{{ $reg->id }}">
-                                            <td colspan="7">
-                                                <table class="table table-sm table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Habitación</th>
-                                                            <th>Imagen</th>
-                                                            <th>Huéspedes</th>
-                                                            <th>Check-in</th>
-                                                            <th>Check-out</th>
-                                                            <th>Estado de Estadia</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach($reg->detalles as $detalle)
-                                                        <tr>
-                                                            <td>{{ $detalle->producto->nombre }}</td>
-                                                            <td>
-                                                                <img src="{{ asset('uploads/productos/' . $detalle->producto->imagen ) }}"
-                                                                    class="img-fluid rounded"
-                                                                    style="width: 80px; height: 80px; object-fit: cover;"
-                                                                    alt="{{ $detalle->producto->nombre}}">
-                                                            </td>
-                                                            <td>{{ $detalle->huespedes }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($detalle->fecha_inicio)->format('d/m/Y') }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($detalle->fecha_fin)->format('d/m/Y') }}</td>
-                                                            <td>
-                                                                @php
-                                                                    $status = $detalle->estadia_status;
-                                                                    $colores = [
-                                                                        'Próxima' => 'bg-info',
-                                                                        'En curso' => 'bg-success',
-                                                                        'Finalizada' => 'bg-secondary',
-                                                                    ];
-                                                                @endphp
-                                                                <span class="badge {{ $colores[$status] ?? 'bg-dark' }}">
-                                                                    {{ $status }}
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        @include('pedido.state')
+                                    @else
+                                        @foreach($registros as $reserva)
+                                            <tr class="align-middle">
+                                                <td>{{ $reserva->id }}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="{{ asset('uploads/productos/' . $reserva->producto->imagen) }}" class="img-fluid rounded me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="{{ $reserva->producto->nombre }}">
+                                                        <span>{{ $reserva->producto->nombre }}</span>
+                                                    </div>
+                                                </td>
+                                                <td>{{ $reserva->pedido->user->name }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($reserva->fecha_inicio)->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($reserva->fecha_fin)->format('d/m/Y') }}</td>
+                                                <td>{{ $reserva->huespedes }}</td>
+                                                <td>
+                                                    @php
+                                                        $status = $reserva->estadia_status;
+                                                        $colores = [
+                                                            'Próxima' => 'bg-info',
+                                                            'En curso' => 'bg-success',
+                                                            'Finalizada' => 'bg-secondary',
+                                                        ];
+                                                    @endphp
+                                                    <span class="badge {{ $colores[$status] ?? 'bg-dark' }}">
+                                                        {{ $status }}
+                                                    </span>
+                                                </td>
+                                            </tr>
                                         @endforeach
-                                        @endif
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
