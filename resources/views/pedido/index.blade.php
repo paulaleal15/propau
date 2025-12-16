@@ -90,6 +90,7 @@
                                                             <th>Cantidad</th>
                                                             <th>Precio Unitario</th>
                                                             <th>Subtotal</th>
+                                                            <th>Estado de Estadía</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -97,7 +98,7 @@
                                                         <tr>
                                                             <td>{{ $detalle->producto->nombre }}</td>
                                                             <td>
-                                                                <img src="{{ asset('uploads/productos/' . $detalle->producto->imagen ) }}"
+                                                                <img src="{{ asset('uploads/productos/'. $detalle->producto->imagen ) }}"
                                                                     class="img-fluid rounded"
                                                                     style="width: 80px; height: 80px; object-fit: cover;"
                                                                     alt="{{ $detalle->producto->nombre}}">
@@ -105,6 +106,20 @@
                                                             <td>{{ $detalle->cantidad}}</td>
                                                             <td>{{ number_format($detalle->precio, 2) }}</td>
                                                             <td>{{ number_format($detalle->cantidad * $detalle->precio, 2) }}
+                                                            </td>
+                                                            <td>
+                                                                @php
+                                                                    $estado = $detalle->estadia_status;
+                                                                    $colores = [
+                                                                        'Próxima' => 'bg-info',
+                                                                        'En curso' => 'bg-success',
+                                                                        'Finalizada' => 'bg-secondary',
+                                                                        'Cancelada' => 'bg-danger',
+                                                                    ];
+                                                                @endphp
+                                                                <span class="badge {{ $colores[$estado] ?? 'bg-dark' }}">
+                                                                    {{ $estado }}
+                                                                </span>
                                                             </td>
                                                         </tr>
                                                         @endforeach
