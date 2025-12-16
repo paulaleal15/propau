@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function(){
     Route::patch('usuarios/{usuario}/toggle', [UserController::class, 'toggleStatus'])->name('usuarios.toggle');
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductoController::class);
+    Route::post('/productos/{producto}/toggle', [ProductoController::class, 'toggleAvailability'])->name('productos.toggle');
 
     Route::get('/pago', [PedidoController::class, 'mostrarPago'])->name('pago.mostrar');
     Route::post('/pago/procesar', [PedidoController::class, 'procesarPago'])->name('pago.procesar');

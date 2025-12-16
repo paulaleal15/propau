@@ -29,7 +29,7 @@ class WebController extends Controller
             }
         }
         // Obtener productos filtrados
-        $productos = $query->paginate(10);    
+        $productos = $query->orderBy('disponible', 'desc')->paginate(10);
         return view('web.index', compact('productos'));
 
     }
@@ -42,7 +42,7 @@ class WebController extends Controller
     }
 
     public function habitaciones(){
-        $productos = Producto::all();
+        $productos = Producto::orderBy('disponible', 'desc')->get();
         return view('web.habitaciones', compact('productos'));
     }
 

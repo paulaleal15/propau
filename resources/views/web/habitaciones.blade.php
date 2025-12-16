@@ -9,13 +9,13 @@
         <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center">
             @forelse($productos as $producto)
             <div class="col mb-5">
-                <a href="{{ route('web.show', $producto->id) }}" class="text-decoration-none text-dark">
-                    <div class="card h-100 card-hover">
+                <a href="{{ $producto->disponible ? route('web.show', $producto->id) : '#' }}" class="text-decoration-none text-dark {{ !$producto->disponible ? 'pe-none' : '' }}">
+                    <div class="card h-100 card-hover {{ !$producto->disponible ? 'bg-light' : '' }}">
                         <!-- Product image-->
                         @if($producto->imagen)
-                        <img class="card-img-top" src="{{ asset('uploads/productos/' . $producto->imagen) }}" alt="{{ $producto->nombre }}" />
+                        <img class="card-img-top {{ !$producto->disponible ? 'opacity-50' : '' }}" src="{{ asset('uploads/productos/' . $producto->imagen) }}" alt="{{ $producto->nombre }}" />
                         @else
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Imagen no disponible" />
+                        <img class="card-img-top {{ !$producto->disponible ? 'opacity-50' : '' }}" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Imagen no disponible" />
                         @endif
                         <!-- Product details-->
                         <div class="card-body p-4">
@@ -26,6 +26,11 @@
                                 <p class="text-muted">{{ $producto->descripcion }}</p>
                                 <!-- Product price-->
                                 <span class="fw-bold">${{ number_format($producto->precio, 2) }} por noche</span>
+                                @if(!$producto->disponible)
+                                    <div class="mt-2">
+                                        <span class="badge bg-danger">No Disponible</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

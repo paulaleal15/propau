@@ -42,13 +42,14 @@
                                         <th>Código</th>
                                         <th>Nombre</th>
                                         <th>Precio</th>
+                                        <th>Estado</th>
                                         <th>Imagen</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if(count($registros)<=0)
                                         <tr>
-                                            <td colspan="6">No hay registros que coincidan con la búsqueda</td>
+                                            <td colspan="7">No hay registros que coincidan con la búsqueda</td>
                                         </tr>
                                     @else
                                         @foreach($registros as $reg)
@@ -56,6 +57,12 @@
                                                 <td>
                                                     @can('producto-edit')
                                                     <a href="{{route('productos.edit', $reg->id)}}" class="btn btn-info btn-sm"><i class="bi bi-pencil-fill"></i></a>&nbsp;
+                                                    <form action="{{ route('productos.toggle', $reg->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-{{ $reg->disponible ? 'warning' : 'success' }} btn-sm">
+                                                            <i class="bi {{ $reg->disponible ? 'bi-slash-circle' : 'bi-check-circle' }}"></i>
+                                                        </button>
+                                                    </form>
                                                     @endcan
                                                     @can('producto-delete')
                                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
@@ -67,6 +74,13 @@
                                                 <td>{{$reg->codigo}}</td>
                                                 <td>{{$reg->nombre}}</td>
                                                 <td>{{$reg->precio}}</td>
+                                                <td>
+                                                    @if($reg->disponible)
+                                                        <span class="badge bg-success">Disponible</span>
+                                                    @else
+                                                        <span class="badge bg-danger">No Disponible</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                 @if($reg->imagen)
                                                     <img src="{{ asset('uploads/productos/' . $reg->imagen) }}" alt="{{ $reg->nombre }}" style="max-width: 150px; height: auto;">

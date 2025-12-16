@@ -44,7 +44,17 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8 mb-3">
+                                <div class="col-md-4 mb-3">
+                                    <label for="disponible" class="form-label">Disponibilidad</label>
+                                    <select class="form-control @error('disponible') is-invalid @enderror" id="disponible" name="disponible" required>
+                                        <option value="1" {{ old('disponible', $registro->disponible ?? '1') == '1' ? 'selected' : '' }}>Disponible</option>
+                                        <option value="0" {{ old('disponible', $registro->disponible ?? '') == '0' ? 'selected' : '' }}>No Disponible</option>
+                                    </select>
+                                    @error('disponible')
+                                       <small class="text-danger">{{$message}}</small>
+                                    @enderror
+                               </div>
+                               <div class="col-md-8 mb-3">
                                     <label for="descripcion" class="form-label">Descripción</label>
                                     <textarea name="descripcion" class="form-control" id="descripcion" 
                                     rows="4">{{ old('descripcion', $registro->descripcion ?? '') }}</textarea>

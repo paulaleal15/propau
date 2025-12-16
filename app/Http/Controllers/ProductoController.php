@@ -41,11 +41,7 @@ class ProductoController extends Controller
     public function store(ProductoRequest $request)
     {
         $this->authorize('producto-create'); 
-        $registro = new Producto();
-        $registro->codigo=$request->input('codigo');
-        $registro->nombre=$request->input('nombre');
-        $registro->precio=$request->input('precio');
-        $registro->descripcion=$request->input('descripcion');
+        $registro = new Producto($request->all());
         $sufijo=strtolower(Str::random(2));
         $image = $request->file('imagen');
         if (!is_null($image)){            
@@ -83,10 +79,7 @@ class ProductoController extends Controller
     {
         $this->authorize('producto-edit'); 
         $registro=Producto::findOrFail($id);
-        $registro->codigo=$request->input('codigo');
-        $registro->nombre=$request->input('nombre');
-        $registro->precio=$request->input('precio');
-        $registro->descripcion=$request->input('descripcion');
+        $registro->fill($request->all());
         $sufijo=strtolower(Str::random(2));
         $image = $request->file('imagen');
         if (!is_null($image)){            
@@ -117,5 +110,13 @@ class ProductoController extends Controller
         }
         $registro->delete();
         return redirect()->route('productos.index')->with('mensaje', $registro->nombre. ' eliminado correctamente.');
+    }
+
+    public function toggleAvailability(Producto $producto)
+    {
+        $this->authorize('producto-edit');
+        $producto->disponible = !$producto->disponible;
+        $producto->save();
+        return redirect()->route('productos.index')->with('mensaje', 'Disponibilidad de '.$producto->nombre. ' actualizada correctamente.');
     }
 }
