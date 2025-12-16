@@ -118,4 +118,13 @@ class ProductoController extends Controller
         $registro->delete();
         return redirect()->route('productos.index')->with('mensaje', $registro->nombre. ' eliminado correctamente.');
     }
+
+    public function toggleAvailability(Producto $producto)
+    {
+        $this->authorize('producto-edit');
+        $producto->disponible = !$producto->disponible;
+        $producto->save();
+        $message = $producto->disponible ? 'habilitada' : 'deshabilitada';
+        return redirect()->route('productos.index')->with('mensaje', 'Habitación ' . $producto->nombre . ' ' . $message . ' correctamente.');
+    }
 }
