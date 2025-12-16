@@ -40,6 +40,9 @@
         <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
       </div>
       <p class="mb-1"><a href="{{route('password.request')}}">Recuperar Contraseña</a></p>
+      <p class="mb-1">
+        <a href="{{route('registro')}}">¿No tienes cuenta? Regístrate</a>
+      </p>
       <!--begin::Row-->
       <div class="row">
         <!-- /.col -->
