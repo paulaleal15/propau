@@ -118,4 +118,15 @@ class ProductoController extends Controller
         $registro->delete();
         return redirect()->route('productos.index')->with('mensaje', $registro->nombre. ' eliminado correctamente.');
     }
+
+    public function toggleAvailability(Request $request, $id)
+    {
+        $this->authorize('producto-edit');
+        $producto = Producto::findOrFail($id);
+        $producto->disponible = !$producto->disponible;
+        $producto->save();
+
+        $message = $producto->disponible ? 'marcada como Disponible' : 'marcada como No Disponible';
+        return redirect()->route('productos.index')->with('mensaje', 'Habitación ' . $producto->nombre . ' ' . $message . '.');
+    }
 }

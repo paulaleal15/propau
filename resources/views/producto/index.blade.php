@@ -42,34 +42,46 @@
                                         <th>Código</th>
                                         <th>Nombre</th>
                                         <th>Precio</th>
+                                        <th>Disponibilidad</th>
                                         <th>Imagen</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if(count($registros)<=0)
                                         <tr>
-                                            <td colspan="6">No hay registros que coincidan con la búsqueda</td>
+                                            <td colspan="7">No hay registros que coincidan con la búsqueda</td>
                                         </tr>
                                     @else
                                         @foreach($registros as $reg)
                                             <tr class="align-middle">
                                                 <td>
                                                     @can('producto-edit')
-                                                    <a href="{{route('productos.edit', $reg->id)}}" class="btn btn-info btn-sm"><i class="bi bi-pencil-fill"></i></a>&nbsp;
+                                                    <a href="{{route('productos.edit', $reg->id)}}" class="btn btn-info btn-sm" title="Editar"><i class="bi bi-pencil-fill"></i></a>
+                                                    <form action="{{ route('productos.toggle', $reg->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-{{ $reg->disponible ? 'success' : 'secondary' }} btn-sm" title="{{ $reg->disponible ? 'Marcar como No Disponible' : 'Marcar como Disponible' }}">
+                                                            <i class="bi bi-power"></i>
+                                                        </button>
+                                                    </form>
                                                     @endcan
                                                     @can('producto-delete')
                                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                            data-bs-target="#modal-eliminar-{{$reg->id}}"><i class="bi bi-trash-fill"></i>
+                                                            data-bs-target="#modal-eliminar-{{$reg->id}}" title="Eliminar"><i class="bi bi-trash-fill"></i>
                                                     </button>
                                                     @endcan
                                                 </td>
                                                 <td>{{$reg->id}}</td>
                                                 <td>{{$reg->codigo}}</td>
                                                 <td>{{$reg->nombre}}</td>
-                                                <td>{{$reg->precio}}</td>
+                                                <td>${{ number_format($reg->precio, 2) }}</td>
+                                                <td>
+                                                    <span class="badge bg-{{ $reg->disponible ? 'success' : 'danger' }}">
+                                                        {{ $reg->disponible ? 'Disponible' : 'No Disponible' }}
+                                                    </span>
+                                                </td>
                                                 <td>
                                                 @if($reg->imagen)
-                                                    <img src="{{ asset('uploads/productos/' . $reg->imagen) }}" alt="{{ $reg->nombre }}" style="max-width: 150px; height: auto;">
+                                                    <img src="{{ asset('uploads/productos/' . $reg->imagen) }}" alt="{{ $reg->nombre }}" style="width: 80px; height: 80px; object-fit: cover;" class="rounded">
                                                 @else
                                                     <span>Sin imagen</span>
                                                 @endif
