@@ -73,7 +73,7 @@
                                                 <td>{{$reg->id}}</td>
                                                 <td>{{$reg->codigo}}</td>
                                                 <td>{{$reg->nombre}}</td>
-                                                <td>{{$reg->precio}}</td>
+                                                <td>COP {{number_format($reg->precio, 0, ',', '.')}}</td>
                                                 <td>
                                                     @if($reg->disponible)
                                                         <span class="badge bg-success">Disponible</span>

@@ -44,7 +44,7 @@
                                 <!-- Product description -->
                                 <p class="text-muted">{{ $producto->descripcion }}</p>
                                 <!-- Product price-->
-                                <span class="fw-bold">${{ number_format($producto->precio, 2) }} por noche</span>
+                                <span class="fw-bold">COP {{ number_format($producto->precio, 0, ',', '.') }} por noche</span>
                             </div>
                         </div>
                     </div>

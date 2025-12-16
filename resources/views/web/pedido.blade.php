@@ -46,7 +46,7 @@
                             </div>
                             <!--Precio-->
                             <div class="col-md-2 text-center">
-                                <span class="fw-bold">${{ number_format($item['precio'], 2) }}</span>
+                                <span class="fw-bold">COP {{ number_format($item['precio'], 0, ',', '.') }}</span>
                             </div>
                             <!--Noches-->
                             <div class="col-md-2 text-center">
@@ -56,7 +56,7 @@
                             <!--Subtotal-->
                             <div class="col-md-3 d-flex align-items-center justify-content-end">
                                 <div class="text-end me-3">
-                                    <span class="fw-bold subtotal">${{ number_format($item['precio'] * $item['cantidad'], 2) }}</span>
+                                    <span class="fw-bold subtotal">COP {{ number_format($item['precio'] * $item['cantidad'], 0, ',', '.') }}</span>
                                 </div>
                                 <a class="btn btn-sm btn-outline-danger" href="{{ route('carrito.eliminar', $carritoId) }}">
                                     <i class="bi bi-trash"></i>
@@ -110,7 +110,7 @@
                         @endphp
                         <div class="d-flex justify-content-between mb-4">
                             <strong>Total</strong>
-                            <strong id="orderTotal">${{ number_format($total, 2) }}</strong>
+                            <strong id="orderTotal">COP {{ number_format($total, 0, ',', '.') }}</strong>
                         </div>
                         <!-- Checkout Button -->
                         <a href="{{ route('pago.mostrar') }}" class="btn btn-primary w-100">
