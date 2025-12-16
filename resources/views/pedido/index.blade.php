@@ -87,9 +87,10 @@
                                                         <tr>
                                                             <th>Habitación</th>
                                                             <th>Imagen</th>
-                                                            <th>Cantidad</th>
-                                                            <th>Precio Unitario</th>
-                                                            <th>Subtotal</th>
+                                                            <th>Huéspedes</th>
+                                                            <th>Check-in</th>
+                                                            <th>Check-out</th>
+                                                            <th>Estado de Estadia</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -102,9 +103,21 @@
                                                                     style="width: 80px; height: 80px; object-fit: cover;"
                                                                     alt="{{ $detalle->producto->nombre}}">
                                                             </td>
-                                                            <td>{{ $detalle->cantidad}}</td>
-                                                            <td>{{ number_format($detalle->precio, 2) }}</td>
-                                                            <td>{{ number_format($detalle->cantidad * $detalle->precio, 2) }}
+                                                            <td>{{ $detalle->huespedes }}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($detalle->fecha_inicio)->format('d/m/Y') }}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($detalle->fecha_fin)->format('d/m/Y') }}</td>
+                                                            <td>
+                                                                @php
+                                                                    $status = $detalle->estadia_status;
+                                                                    $colores = [
+                                                                        'Próxima' => 'bg-info',
+                                                                        'En curso' => 'bg-success',
+                                                                        'Finalizada' => 'bg-secondary',
+                                                                    ];
+                                                                @endphp
+                                                                <span class="badge {{ $colores[$status] ?? 'bg-dark' }}">
+                                                                    {{ $status }}
+                                                                </span>
                                                             </td>
                                                         </tr>
                                                         @endforeach
