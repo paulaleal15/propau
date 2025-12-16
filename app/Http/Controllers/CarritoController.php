@@ -17,6 +17,10 @@ class CarritoController extends Controller
 
         $producto = Producto::findOrFail($request->producto_id);
 
+        if (!$producto->disponible) {
+            return back()->withErrors(['error' => 'La habitación seleccionada no está disponible.'])->withInput();
+        }
+
         if ($request->huespedes > $producto->max_huespedes) {
             return back()->withErrors(['huespedes' => 'El número de huéspedes supera el máximo permitido para esta habitación.'])->withInput();
         }

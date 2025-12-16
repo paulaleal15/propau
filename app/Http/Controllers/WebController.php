@@ -8,7 +8,7 @@ use App\Models\Producto;
 class WebController extends Controller
 {
     public function index(Request $request){
-        $query=Producto::query();
+        $query = Producto::query()->orderBy('disponible', 'desc');
         // Búsqueda por nombre
         if ($request->has('search') && $request->search) {
             $query->where('nombre', 'like', '%' . $request->search . '%');
@@ -42,7 +42,7 @@ class WebController extends Controller
     }
 
     public function habitaciones(){
-        $productos = Producto::all();
+        $productos = Producto::orderBy('disponible', 'desc')->get();
         return view('web.habitaciones', compact('productos'));
     }
 
