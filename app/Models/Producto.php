@@ -13,5 +13,6 @@ class Producto extends Model
         'descripcion',
         'imagen',
         'max_huespedes',
+        'disponible',
     ];
 }
