@@ -33,7 +33,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pago', [PedidoController::class, 'mostrarPago'])->name('pago.mostrar');
     Route::post('/pago/procesar', [PedidoController::class, 'procesarPago'])->name('pago.procesar');
     Route::get('/perfil/pedidos', [PedidoController::class, 'index'])->name('perfil.pedidos');
-    Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar.estado');    
 
     Route::get('dashboard', function(){
         return view('dashboard');
