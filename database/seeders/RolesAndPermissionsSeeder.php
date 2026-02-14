@@ -28,7 +28,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'pedido-list', 'pedido-anulate'
         ];
 
-        $clientePermissions = ['pedido-view', 'pedido-cancel','perfil'];
+        $clientePermissions = ['pedido-view', 'pedido-cancel','perfil', 'producto-list', 'user-list', 'rol-list'];
 
         // Crear y asignar permisos
         foreach ($adminPermissions as $permiso) {
